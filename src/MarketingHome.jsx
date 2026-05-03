@@ -64,24 +64,25 @@ const products = [
 ];
 
 function CountdownTimer() {
-  const [time, setTime] = useState({ h: 16, m: 21, s: 57 });
+  // total seconds remaining (example: 5d 16h 21m 57s)
+  const [remaining, setRemaining] = useState(5 * 86400 + 16 * 3600 + 21 * 60 + 57);
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime((prev) => {
-        let { h, m, s } = prev;
-        s--;
-        if (s < 0) { s = 59; m--; }
-        if (m < 0) { m = 59; h--; }
-        if (h < 0) { h = 0; m = 0; s = 0; }
-        return { h, m, s };
-      });
+      setRemaining((prev) => Math.max(0, prev - 1));
     }, 1000);
     return () => clearInterval(interval);
   }, []);
   const pad = (n) => String(n).padStart(2, "0");
+
+  const days = Math.floor(remaining / 86400);
+  const hours = Math.floor((remaining % 86400) / 3600);
+  const minutes = Math.floor((remaining % 3600) / 60);
+  const seconds = remaining % 60;
+
   return (
     <span className="countdown">
-      {pad(time.h)}d : {pad(time.m)}h : {pad(time.s)}m : 23s
+      {pad(days)}d : 
+      {pad(hours)}h : {pad(minutes)}m : {pad(seconds)}s
     </span>
   );
 }
@@ -336,9 +337,7 @@ export default function MarketingHome({ hideHeader = false }) {
           display: flex; align-items: center; justify-content: center;
           font-size: 16px; font-weight: 700; font-family: 'Sora', sans-serif;
         }
-        .hero-dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
-        .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; cursor: pointer; }
-        .hero-dot.active { background: var(--primary); }
+        
 
         /* SIDE BANNERS */
         .side-banners { display: flex; flex-direction: column; gap: 12px; }
@@ -517,7 +516,6 @@ export default function MarketingHome({ hideHeader = false }) {
           .header-icons { margin-left: auto; }
           .hero-banner { flex-direction: column; align-items: flex-start; padding: 18px; }
           .hero-img-placeholder { width: 100%; height: 180px; }
-          .hero-dots { left: 18px; transform: none; }
           .features-bar { grid-template-columns: 1fr; }
           .products-grid { grid-template-columns: 1fr; }
           .large-card { grid-row: auto; }
@@ -600,11 +598,6 @@ export default function MarketingHome({ hideHeader = false }) {
           </div>
           <div className="hero-img-placeholder">
             <div className="price-bubble">$299</div>
-          </div>
-          <div className="hero-dots">
-            <div className="hero-dot active" />
-            <div className="hero-dot" />
-            <div className="hero-dot" />
           </div>
         </div>
 
