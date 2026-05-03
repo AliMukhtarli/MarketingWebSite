@@ -137,11 +137,13 @@ export default function Marketing2() {
           font-family: 'DM Sans', sans-serif;
           background: #f8f8fb;
           color: #1a1f3c;
+          overflow-x: hidden;
         }
+        :root { --page-pad: clamp(16px, 3vw, 40px); }
 
         /* ── SHOP WITH CATEGORIES ── */
         .s2-categories-section {
-          padding: 48px 40px 32px;
+          padding: 48px var(--page-pad) 32px;
           text-align: center;
         }
         .s2-section-title {
@@ -196,7 +198,7 @@ export default function Marketing2() {
 
         /* ── FEATURED PRODUCTS ── */
         .s2-featured-section {
-          padding: 16px 40px 40px;
+          padding: 16px var(--page-pad) 40px;
           display: grid;
           grid-template-columns: 240px 1fr;
           gap: 20px;
@@ -260,6 +262,7 @@ export default function Marketing2() {
           display: flex; align-items: center;
           justify-content: space-between;
           margin-bottom: 16px;
+          gap: 12px;
         }
         .s2-featured-title {
           font-family: 'Sora', sans-serif;
@@ -267,6 +270,8 @@ export default function Marketing2() {
         }
         .s2-tabs-row {
           display: flex; align-items: center; gap: 0;
+          flex-wrap: wrap;
+          justify-content: flex-end;
         }
         .s2-tab {
           padding: 6px 14px; font-size: 13px;
@@ -351,13 +356,14 @@ export default function Marketing2() {
         .s2-stars { display: flex; font-size: 12px; }
         .s2-review-count { font-size: 10px; color: #6b7280; }
         .s2-product-name { font-size: 12px; font-weight: 500; line-height: 1.4; color: #1a1f3c; margin-bottom: 6px; }
+        .s2-product-name { overflow-wrap: anywhere; word-break: break-word; }
         .s2-price-row { display: flex; align-items: center; gap: 6px; }
         .s2-old-price { font-size: 11px; color: #9ca3af; text-decoration: line-through; }
         .s2-price { font-size: 14px; font-weight: 700; color: #B401A5; }
 
         /* ── INTRO BANNERS ── */
         .s2-intro-banners {
-          padding: 0 40px 48px;
+          padding: 0 var(--page-pad) 48px;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 16px;
@@ -443,11 +449,19 @@ export default function Marketing2() {
           .s2-featured-section { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-          .s2-categories-section,
-          .s2-featured-section,
-          .s2-intro-banners { padding-left: 16px; padding-right: 16px; }
           .s2-intro-banners { grid-template-columns: 1fr; }
           .s2-cat-grid { grid-template-columns: repeat(3, 1fr); }
+          .s2-featured-header { flex-direction: column; align-items: flex-start; }
+          .s2-tabs-row { justify-content: flex-start; }
+          .s2-tab { padding: 6px 10px; }
+        }
+        @media (max-width: 480px) {
+          .s2-arrow-btn { display: none; }
+          .s2-cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+          .s2-products-grid { grid-template-columns: 1fr; }
+          .s2-intro-light, .s2-intro-dark { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .s2-intro-img-light, .s2-intro-img-dark { width: 100%; height: 160px; }
+          .s2-intro-light p, .s2-intro-dark p { max-width: none; }
         }
       `}</style>
 

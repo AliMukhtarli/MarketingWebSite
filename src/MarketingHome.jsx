@@ -150,13 +150,14 @@ function ProductCard({ product }) {
   );
 }
 
-export default function MarketingHome() {
+export default function MarketingHome({ hideHeader = false }) {
   return (
     <div className="umico-app">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        img, svg, video, canvas { max-width: 100%; height: auto; }
 
         :root {
           --primary: #B401A5;
@@ -172,19 +173,26 @@ export default function MarketingHome() {
           --green: #38a169;
         }
 
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+        html, body { width: 100%; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
         .umico-app { min-height: 100vh; }
+        .countdown { white-space: nowrap; }
+
+        /* Small responsive helpers */
+        :root { --page-pad: clamp(16px, 3vw, 40px); }
 
         /* TOP BAR */
         .top-bar {
           background: var(--navy);
           color: #ccc;
           font-size: 12px;
-          padding: 6px 40px;
+          padding: 6px var(--page-pad);
           display: flex;
           justify-content: space-between;
           align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
         }
         .top-bar-right { display: flex; gap: 16px; align-items: center; }
         .social-dots { display: flex; gap: 4px; }
@@ -203,13 +211,14 @@ export default function MarketingHome() {
         /* HEADER */
         .header {
           background: var(--white);
-          padding: 12px 40px;
+          padding: 12px var(--page-pad);
           display: flex;
           align-items: center;
           gap: 24px;
           border-bottom: 1px solid var(--border);
           position: sticky; top: 0; z-index: 100;
           box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          flex-wrap: wrap;
         }
         .logo {
           display: flex; align-items: center; gap: 8px;
@@ -223,11 +232,13 @@ export default function MarketingHome() {
           border: 1.5px solid var(--border);
           border-radius: 8px;
           overflow: hidden;
+          min-width: min(520px, 100%);
         }
         .search-bar input {
           flex: 1; border: none; outline: none;
           padding: 10px 16px; font-size: 14px; font-family: inherit;
           background: transparent;
+          min-width: 0;
         }
           .search-bar button {
           border: none; cursor: pointer;
@@ -253,9 +264,10 @@ export default function MarketingHome() {
         /* NAV BAR */
         .nav-bar {
           background: var(--white);
-          padding: 0 40px;
+          padding: 0 var(--page-pad);
           display: flex; align-items: center; justify-content: space-between;
           border-bottom: 1px solid var(--border);
+          overflow-x: auto;
         }
         .nav-left { display: flex; gap: 0; align-items: center; }
         .nav-item {
@@ -265,6 +277,7 @@ export default function MarketingHome() {
           border-right: 1px solid var(--border);
           transition: color 0.2s;
           white-space: nowrap;
+          flex: 0 0 auto;
         }
         .nav-item:hover { color: var(--primary); }
         .nav-item .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; flex-shrink: 0; }
@@ -276,7 +289,7 @@ export default function MarketingHome() {
 
         /* HERO SECTION */
         .hero-section {
-          padding: 24px 40px;
+          padding: 24px var(--page-pad);
           display: grid;
           grid-template-columns: 1fr 300px;
           gap: 16px;
@@ -294,11 +307,12 @@ export default function MarketingHome() {
           position: relative;
           min-height: 260px;
           box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          gap: 16px;
         }
-        .hero-text { max-width: 300px; }
+        .hero-text { max-width: 300px; min-width: 0; }
         .hero-tag { font-size: 11px; font-weight: 600; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--primary); }
-        .hero-title { font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; color: var(--text); }
+        .hero-title { font-family: 'Sora', sans-serif; font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; color: var(--text); }
         .hero-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
         .shop-now-btn {
           background: var(--accent); color: white;
@@ -359,7 +373,7 @@ export default function MarketingHome() {
 
         /* FEATURES BAR */
         .features-bar {
-          margin: 0 40px 24px;
+          margin: 0 var(--page-pad) 24px;
           background: var(--white);
           border-radius: 10px;
           display: grid;
@@ -378,7 +392,7 @@ export default function MarketingHome() {
         .feature-item p { font-size: 11px; color: var(--muted); }
 
         /* BEST DEALS */
-        .best-deals { padding: 0 40px 40px; }
+        .best-deals { padding: 0 var(--page-pad) 40px; }
         .section-header {
           display: flex; align-items: center; gap: 16px;
           margin-bottom: 20px;
@@ -448,7 +462,7 @@ export default function MarketingHome() {
         }
         .hover-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
 
-        .product-name { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--text); }
+        .product-name { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
         .product-name.small { font-size: 12px; }
         .price-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
         .old-price { font-size: 12px; color: var(--muted); text-decoration: line-through; }
@@ -483,74 +497,95 @@ export default function MarketingHome() {
           .large-card { grid-row: auto; }
           .hero-section { grid-template-columns: 1fr; }
           .side-banners { flex-direction: row; }
+          .hero-banner { padding: 28px; }
         }
         @media (max-width: 768px) {
-          .header { padding: 12px 16px; }
-          .hero-section, .best-deals, .features-bar { padding-left: 16px; padding-right: 16px; }
-          .features-bar { grid-template-columns: repeat(2, 1fr); margin: 0 16px 16px; }
+          .header { gap: 12px; }
+          .search-bar { order: 3; flex: 1 1 100%; }
+          .top-bar-right { flex-wrap: wrap; justify-content: flex-end; }
+          .features-bar { grid-template-columns: repeat(2, 1fr); margin-bottom: 16px; }
           .products-grid { grid-template-columns: repeat(2, 1fr); }
           .nav-bar { display: none; }
+          .hero-banner { padding: 22px; }
+          .hero-text { max-width: none; }
+          .hero-img-placeholder { width: 220px; height: 200px; }
+          .side-banners { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+          .top-bar { font-size: 11px; }
+          .social-dots { display: none; }
+          .header-icons { margin-left: auto; }
+          .hero-banner { flex-direction: column; align-items: flex-start; padding: 18px; }
+          .hero-img-placeholder { width: 100%; height: 180px; }
+          .hero-dots { left: 18px; transform: none; }
+          .features-bar { grid-template-columns: 1fr; }
+          .products-grid { grid-template-columns: 1fr; }
+          .large-card { grid-row: auto; }
         }
       `}</style>
 
-      {/* TOP BAR */}
-      <div className="top-bar">
-        <span>Welcome to Clicon online eCommerce store.</span>
-        <div className="top-bar-right">
-          <span>Follow us:</span>
-          <div className="social-dots">
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-          </div>
-          <div className="lang-currency">
-            <span>Eng ▾</span>
-            <span>USD ▾</span>
-          </div>
-        </div>
-      </div>
-
-      {/* HEADER */}
-      <header className="header">
-        <a className="logo" href="#">
-          <div className="logo-box" />
-          Umico
-        </a>
-        <div className="search-bar">
-          <input type="text" placeholder="Search for anything..." />
-          <button>🔍</button>
-        </div>
-        <div className="header-icons">
-          <div className="icon-circle">
-            🛒
-            <span className="cart-badge">0</span>
-          </div>
-          <div className="icon-circle">♡</div>
-          <div className="icon-circle">👤</div>
-        </div>
-      </header>
-
-      {/* NAV BAR */}
-      <nav className="nav-bar">
-        <div className="nav-left">
-          <div className="nav-item all-cat">
-            <span className="nav-dot" />
-            All Category ▾
-          </div>
-          {["Track Order", "Compare", "Customer Support", "Need Help"].map((item) => (
-            <div className="nav-item" key={item}>
-              <span className="nav-dot" />
-              {item}
+      {!hideHeader && (
+        <>
+          {/* TOP BAR */}
+          <div className="top-bar">
+            <span>Welcome to Clicon online eCommerce store.</span>
+            <div className="top-bar-right">
+              <span>Follow us:</span>
+              <div className="social-dots">
+                <div className="social-dot" />
+                <div className="social-dot" />
+                <div className="social-dot" />
+                <div className="social-dot" />
+                <div className="social-dot" />
+              </div>
+              <div className="lang-currency">
+                <span>Eng ▾</span>
+                <span>USD ▾</span>
+              </div>
             </div>
-          ))}
-        </div>
-        <div className="nav-phone">
-          <span className="nav-dot" />
-          +1-202-555-0104
-        </div>
-      </nav>
+          </div>
+
+          {/* HEADER */}
+          <header className="header">
+            <a className="logo" href="#">
+              <div className="logo-box" />
+              Umico
+            </a>
+            <div className="search-bar">
+              <input type="text" placeholder="Search for anything..." />
+              <button>🔍</button>
+            </div>
+            <div className="header-icons">
+              <div className="icon-circle">
+                🛒
+                <span className="cart-badge">0</span>
+              </div>
+              <div className="icon-circle">♡</div>
+              <div className="icon-circle">👤</div>
+            </div>
+          </header>
+
+          {/* NAV BAR */}
+          <nav className="nav-bar">
+            <div className="nav-left">
+              <div className="nav-item all-cat">
+                <span className="nav-dot" />
+                All Category ▾
+              </div>
+              {["Track Order", "Compare", "Customer Support", "Need Help"].map((item) => (
+                <div className="nav-item" key={item}>
+                  <span className="nav-dot" />
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="nav-phone">
+              <span className="nav-dot" />
+              +1-202-555-0104
+            </div>
+          </nav>
+        </>
+      )}
 
       {/* HERO SECTION */}
       <section className="hero-section">

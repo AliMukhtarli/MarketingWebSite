@@ -101,11 +101,13 @@ export default function MarketingSection3() {
           font-family: 'DM Sans', sans-serif;
           background: #f8f8fb;
           color: #1a1f3c;
+          overflow-x: hidden;
         }
+        :root { --page-pad: clamp(16px, 3vw, 40px); }
 
         /* ── COMPUTER ACCESSORIES ── */
         .s3-acc-section {
-          padding: 40px 40px 0;
+          padding: 40px var(--page-pad) 0;
           display: grid;
           grid-template-columns: 1fr 220px;
           gap: 20px;
@@ -172,7 +174,7 @@ export default function MarketingSection3() {
         .s3-rating-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
         .s3-stars { display: flex; font-size: 12px; }
         .s3-review-count { font-size: 10px; color: #6b7280; }
-        .s3-product-name { font-size: 12px; font-weight: 500; line-height: 1.4; color: #1a1f3c; margin-bottom: 6px; }
+        .s3-product-name { font-size: 12px; font-weight: 500; line-height: 1.4; color: #1a1f3c; margin-bottom: 6px; overflow-wrap: anywhere; word-break: break-word; }
         .s3-price-row { display: flex; align-items: center; gap: 6px; }
         .s3-old-price { font-size: 11px; color: #9ca3af; text-decoration: line-through; }
         .s3-price { font-size: 14px; font-weight: 700; color: #B401A5; }
@@ -252,7 +254,7 @@ export default function MarketingSection3() {
 
         /* ── MACBOOK BANNER ── */
         .s3-macbook-banner {
-          margin: 28px 40px;
+          margin: 28px var(--page-pad);
           background: #fde8d4;
           border-radius: 16px;
           padding: 48px 56px;
@@ -262,6 +264,7 @@ export default function MarketingSection3() {
           overflow: hidden;
           position: relative;
           box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+          gap: 20px;
         }
         .s3-mac-text {}
         .s3-save-tag {
@@ -273,7 +276,7 @@ export default function MarketingSection3() {
         }
         .s3-mac-title {
           font-family: 'Sora', sans-serif;
-          font-size: 42px; font-weight: 700;
+          font-size: clamp(28px, 4vw, 42px); font-weight: 700;
           color: #1a1f3c; margin-bottom: 10px; line-height: 1.1;
         }
         .s3-mac-desc {
@@ -282,6 +285,7 @@ export default function MarketingSection3() {
         }
         .s3-mac-right {
           display: flex; align-items: center; gap: 24px; flex-shrink: 0;
+          flex-wrap: wrap;
         }
         .s3-mac-bubble {
           width: 90px; height: 90px; border-radius: 50%;
@@ -300,7 +304,7 @@ export default function MarketingSection3() {
 
         /* ── FLASH SALE / BEST SELLERS / etc ── */
         .s3-lists-section {
-          padding: 0 40px 48px;
+          padding: 0 var(--page-pad) 48px;
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 24px;
@@ -336,6 +340,7 @@ export default function MarketingSection3() {
           margin-bottom: 4px;
           transition: color 0.15s;
         }
+        .s3-mini-name { overflow-wrap: anywhere; word-break: break-word; }
         .s3-mini-price {
           font-size: 13px; font-weight: 700; color: #B401A5;
         }
@@ -345,12 +350,19 @@ export default function MarketingSection3() {
           .s3-acc-grid { grid-template-columns: repeat(2, 1fr); }
           .s3-acc-right { flex-direction: row; }
           .s3-lists-section { grid-template-columns: repeat(2, 1fr); }
+          .s3-macbook-banner { padding: 36px 28px; }
         }
         @media (max-width: 768px) {
-          .s3-acc-section, .s3-lists-section, .s3-macbook-banner { padding-left: 16px; padding-right: 16px; }
-          .s3-macbook-banner { margin: 16px; flex-direction: column; gap: 24px; }
-          .s3-mac-title { font-size: 28px; }
+          .s3-macbook-banner { margin: 16px; flex-direction: column; gap: 24px; padding: 28px 18px; align-items: flex-start; }
+          .s3-mac-right { width: 100%; justify-content: space-between; }
+          .s3-mac-img { width: min(360px, 100%); height: 190px; }
           .s3-lists-section { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+          .s3-acc-grid { grid-template-columns: 1fr; }
+          .s3-acc-right { flex-direction: column; }
+          .s3-mac-right { flex-direction: column; align-items: flex-start; }
+          .s3-mac-bubble { width: 76px; height: 76px; font-size: 16px; }
         }
       `}</style>
 

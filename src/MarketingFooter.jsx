@@ -69,12 +69,14 @@ export default function MarketingFooter() {
         .sf-wrapper {
           font-family: 'DM Sans', sans-serif;
           color: #1a1f3c;
+          overflow-x: hidden;
         }
+        :root { --page-pad: clamp(16px, 3vw, 40px); }
 
         /* ── LATEST NEWS ── */
         .sf-news-section {
           background: #f8f8fb;
-          padding: 48px 40px 56px;
+          padding: 48px var(--page-pad) 56px;
         }
         .sf-section-title {
           font-family: 'Sora', sans-serif;
@@ -121,6 +123,7 @@ export default function MarketingFooter() {
           font-size: 13px; color: #6b7280;
           line-height: 1.65; margin-bottom: 18px;
         }
+        .sf-news-title, .sf-news-desc { overflow-wrap: anywhere; word-break: break-word; }
         .sf-read-more {
           background: none; border: 1.5px solid #f5a623;
           color: #f5a623; border-radius: 6px;
@@ -134,7 +137,7 @@ export default function MarketingFooter() {
         /* ── NEWSLETTER ── */
         .sf-newsletter {
           background: #1a1f3c;
-          padding: 60px 40px;
+          padding: 60px var(--page-pad);
           text-align: center;
         }
         .sf-nl-title {
@@ -185,7 +188,7 @@ export default function MarketingFooter() {
         /* ── FOOTER ── */
         .sf-footer {
           background: #7c3aed;
-          padding: 48px 40px 0;
+          padding: 48px var(--page-pad) 0;
         }
         .sf-footer-grid {
           display: grid;
@@ -292,7 +295,7 @@ export default function MarketingFooter() {
         .sf-bottom-bar {
           background: #6d28d9;
           text-align: center;
-          padding: 14px 40px;
+          padding: 14px var(--page-pad);
           font-size: 12px;
           color: rgba(255,255,255,0.55);
         }
@@ -302,12 +305,13 @@ export default function MarketingFooter() {
           .sf-news-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
-          .sf-news-section, .sf-newsletter, .sf-footer { padding-left: 16px; padding-right: 16px; }
           .sf-news-grid { grid-template-columns: 1fr; }
           .sf-footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
         }
         @media (max-width: 480px) {
           .sf-footer-grid { grid-template-columns: 1fr; }
+          .sf-nl-form { flex-direction: column; max-width: 420px; }
+          .sf-nl-btn { padding: 12px 18px; justify-content: center; }
         }
       `}</style>
 
