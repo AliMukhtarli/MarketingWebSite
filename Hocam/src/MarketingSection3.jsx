@@ -91,7 +91,7 @@ function MiniProductRow({ item }) {
   );
 }
 
-export default function UmicoSection3() {
+export default function MarketingSection3() {
   return (
     <div className="s3-wrapper">
       <style>{`
