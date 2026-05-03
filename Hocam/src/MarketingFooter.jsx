@@ -53,7 +53,7 @@ const popularTags = [
   "Tablet", "Microwave", "Samsung",
 ];
 
-export default function UmicoFooter() {
+export default function MarketingFooter() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
