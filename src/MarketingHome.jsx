@@ -281,8 +281,8 @@ export default function MarketingHome({ hideHeader = false }) {
         }
         .nav-item:hover { color: var(--primary); }
         .nav-item .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; flex-shrink: 0; }
-        .nav-item.all-cat { background: var(--primary); color: white; border-radius: 0; }
-        .nav-item.all-cat .nav-dot { background: white; }
+        .nav-item.all-cat { background: var(--white); color: var(--text); border-radius: 0; }
+        .nav-item.all-cat .nav-dot { background: var(--white); }
         .nav-item.all-cat:hover { background: var(--primary-dark); color: white; }
         .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
         .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; }

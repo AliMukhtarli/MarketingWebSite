@@ -74,7 +74,7 @@ export default function SiteHeader() {
           background: transparent;
           min-width: 0;
         }
-        .search-bar button { border: none; cursor: pointer; padding: 0 18px; color: white; font-size: 18px; background: var(--primary); }
+        .search-bar button { border: none; cursor: pointer; padding: 0 18px; color: white; font-size: 18px; }
         .header-icons { display: flex; gap: 16px; align-items: center; }
         .icon-circle {
           position: relative; cursor: pointer;
