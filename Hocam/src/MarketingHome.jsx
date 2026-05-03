@@ -150,7 +150,7 @@ function ProductCard({ product }) {
   );
 }
 
-export default function UmicoHome() {
+export default function MarketingHome() {
   return (
     <div className="umico-app">
       <style>{`

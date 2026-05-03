@@ -1,11 +1,14 @@
 import ReactDOM from "react-dom/client";
 import React, { useState, useEffect } from "react";
-import  UmicoHome from "./UmicoHome"
+import  MarketingHome from "./MarketingHome"
+import MarketingSection2 from "./MarketingSection2";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <UmicoHome />
-  
+  <div>
+  <MarketingHome />
+  <MarketingSection2 />
+  </div>
 );
