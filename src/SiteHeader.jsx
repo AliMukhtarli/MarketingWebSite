@@ -119,7 +119,7 @@ export default function SiteHeader() {
         /* NAV BAR */
         .nav-bar {
           background: var(--white);
-          padding: 0 var(--page-pad);
+          padding: 10px var(--page-pad) 8px;
           display: flex; align-items: center; justify-content: space-between;
           border-bottom: 1px solid var(--border);
           overflow: visible;
