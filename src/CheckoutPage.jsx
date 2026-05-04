@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
 
@@ -23,6 +23,7 @@ const PAYMENT_METHODS = [
 ];
 
 export default function CheckoutPage() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -455,7 +456,11 @@ export default function CheckoutPage() {
               <span>${TOTAL.toLocaleString(undefined, { minimumFractionDigits: 2 })} USD</span>
             </div>
 
-            <button type="button" className="co-place-order">
+            <button
+              type="button"
+              className="co-place-order"
+              onClick={() => navigate("/order-success")}
+            >
               PLACE ORDER →
             </button>
           </div>

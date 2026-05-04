@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import CartPage from "./CartPage";
 import CheckoutPage from "./CheckoutPage";
 import HomePage from "./HomePage";
+import OrderSuccessPage from "./OrderSuccessPage";
 import TrackOrderPage from "./TrackOrderPage";
 import WishlistPage from "./WishlistPage";
 
@@ -16,6 +17,7 @@ root.render(
       <Route path="/wishlist" element={<WishlistPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/order-success" element={<OrderSuccessPage />} />
       <Route path="/track-order" element={<TrackOrderPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
