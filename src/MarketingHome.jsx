@@ -156,7 +156,9 @@ function ProductCard({ product }) {
       <div className="product-card large-card">
         {product.badge && <span className="badge hot">{product.badge}</span>}
         {product.discount && <span className="badge discount">{product.discount}</span>}
-        <img className="product-thumb" src={product.image} alt="" />
+        <div className="product-thumb-wrap">
+          <img className="product-thumb" src={product.image} alt="" />
+        </div>
         <StarRating rating={product.rating} />
         <span className="review-count">({product.reviews?.toLocaleString()})</span>
         <p className="product-name">{product.name}</p>
@@ -186,7 +188,9 @@ function ProductCard({ product }) {
         </span>
       )}
       {product.discount && <span className="badge discount">{product.discount}</span>}
-      <img className="product-thumb" src={product.image} alt="" />
+      <div className="product-thumb-wrap">
+        <img className="product-thumb" src={product.image} alt="" />
+      </div>
       {hovered && (
         <div className="hover-actions">
           <button className="hover-btn" title="Like">♡</button>
@@ -269,11 +273,12 @@ export default function MarketingHome({ hideHeader = false }) {
         .logo-box { width: 18px; height: 18px; background: var(--primary); border-radius: 3px; }
         .search-bar {
           flex: 1;
+          min-width: 0;
+          max-width: 100%;
           display: flex;
           border: 1.5px solid var(--border);
           border-radius: 8px;
           overflow: hidden;
-          min-width: min(520px, 100%);
         }
         .search-bar input {
           flex: 1; border: none; outline: none;
@@ -332,8 +337,9 @@ export default function MarketingHome({ hideHeader = false }) {
         .hero-section {
           padding: 24px var(--page-pad);
           display: grid;
-          grid-template-columns: 1fr 300px;
+          grid-template-columns: 1fr minmax(260px, 300px);
           gap: 16px;
+          min-width: 0;
         }
 
         /* HERO BANNER */
@@ -341,7 +347,7 @@ export default function MarketingHome({ hideHeader = false }) {
           background: var(--white);
           border-radius: 12px;
           overflow: hidden;
-          padding: 40px;
+          padding: clamp(20px, 4vw, 40px);
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -349,6 +355,7 @@ export default function MarketingHome({ hideHeader = false }) {
           min-height: 260px;
           box-shadow: 0 2px 12px rgba(0,0,0,0.06);
           gap: 16px;
+          flex-wrap: wrap;
         }
         .hero-text { max-width: 300px; min-width: 0; }
         .hero-tag { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
@@ -364,11 +371,24 @@ export default function MarketingHome({ hideHeader = false }) {
         }
         .shop-now-btn:hover { background: #e0920f; transform: translateY(-1px); }
         .hero-img-placeholder {
-          width: 240px; height: 220px;
-          background: var(--primary);
+          width: min(240px, 100%);
+          height: 220px;
           border-radius: 12px;
           flex-shrink: 0;
           position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+          overflow: hidden;
+        }
+        .hero-img-placeholder img {
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          display: block;
         }
         .price-bubble {
           position: absolute;
@@ -425,6 +445,14 @@ export default function MarketingHome({ hideHeader = false }) {
           border-radius: 10px; padding: 16px;
           display: flex; align-items: center; gap: 14px;
           box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          min-width: 0;
+        }
+        .side-bottom-product-img {
+          width: 80px; height: 80px; flex-shrink: 0;
+          object-fit: contain;
+          background: #eef0f4;
+          border-radius: 8px;
+          padding: 4px;
         }
         .side-bottom-img { width: 80px; height: 80px; background: var(--primary); border-radius: 8px; flex-shrink: 0; }
         .side-bottom-info h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
@@ -467,6 +495,7 @@ export default function MarketingHome({ hideHeader = false }) {
         .section-header {
           display: flex; align-items: center; gap: 16px;
           margin-bottom: 20px;
+          flex-wrap: wrap;
         }
         .section-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; }
         .deals-timer { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
@@ -504,17 +533,26 @@ export default function MarketingHome({ hideHeader = false }) {
         }
         .large-img { height: 220px; }
 
-        .product-card .product-thumb {
+        .product-thumb-wrap {
           width: 100%;
           height: 120px;
-          object-fit: cover;
-          border-radius: 8px;
           margin-bottom: 8px;
-          display: block;
-          background: var(--primary);
+          border-radius: 8px;
+          background: #eef0f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
         }
-        .large-card .product-thumb {
-          height: 220px;
+        .large-card .product-thumb-wrap { height: 220px; }
+        .product-thumb-wrap .product-thumb {
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          object-position: center;
+          display: block;
         }
 
         /* BADGES */
@@ -692,7 +730,7 @@ export default function MarketingHome({ hideHeader = false }) {
             </div>
           </div>
           <div className="side-banner-bottom">
-            <img src="/images/homepage/FlipBuds.jpg" alt="" />
+            <img className="side-bottom-product-img" src="/images/homepage/FlipBuds.jpg" alt="" />
             <div className="side-bottom-info">
               <h4>Xiaomi FlipBuds Pro</h4>
               <p className="usd-price">$299 USD</p>

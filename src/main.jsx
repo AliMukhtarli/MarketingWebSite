@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import React from "react";
+import "./global.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import CartPage from "./CartPage";
 import CheckoutPage from "./CheckoutPage";

@@ -110,7 +110,9 @@ function FeaturedProductCard({ product }) {
       {product.discount && (
         <span className="s2-badge s2-badge-discount">{product.discount}</span>
       )}
-      <img className="s2-product-img" src={product.image} alt="" />
+      <div className="s2-product-img-wrap">
+        <img className="s2-product-img" src={product.image} alt="" />
+      </div>
       {hovered && (
         <div className="s2-hover-actions">
           <button className="s2-hover-btn" title="Like">♡</button>
@@ -190,10 +192,12 @@ export default function Marketing2() {
         }
         .s2-cat-img {
           width: 100%; aspect-ratio: 1;
-          object-fit: cover;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #B401A5;
+          background: #eef0f4;
           border-radius: 10px;
+          padding: 8px;
           transition: transform 0.2s, box-shadow 0.2s;
         }
         .s2-cat-item:hover .s2-cat-img {
@@ -324,12 +328,23 @@ export default function Marketing2() {
           box-shadow: 0 6px 24px rgba(0,0,0,0.12);
           transform: translateY(-2px);
         }
-        .s2-product-img {
+        .s2-product-img-wrap {
           width: 100%;
           height: 130px;
-          object-fit: cover;
+          background: #eef0f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+        }
+        .s2-product-img {
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #B401A5;
         }
         .s2-badge {
           position: absolute; top: 10px; left: 10px;

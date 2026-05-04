@@ -85,11 +85,19 @@ export default function SiteHeader() {
         .logo-box { width: 18px; height: 18px; background: var(--primary); border-radius: 3px; }
         .search-bar {
           flex: 1;
+          min-width: 0;
+          max-width: 100%;
           display: flex;
           border: 1.5px solid var(--border);
           border-radius: 8px;
           overflow: hidden;
-          min-width: min(520px, 100%);
+        }
+        .logo img {
+          height: 36px;
+          width: auto;
+          max-width: 48px;
+          object-fit: contain;
+          flex-shrink: 0;
         }
         .search-bar input {
           flex: 1; border: none; outline: none;
@@ -154,8 +162,8 @@ export default function SiteHeader() {
           display: block;
         }
         /* all category styling is inside AllCategoryDropdown */
-        .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-        .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
+        .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; }
+        .nav-phone-icon { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
 
         @media (max-width: 768px) {
           .search-bar { order: 3; flex: 1 1 100%; }
@@ -175,7 +183,7 @@ export default function SiteHeader() {
 
       <header className="header">
         <Link className="logo" to="/">
-          <img src="images/nav/basket.jpg" width={40} alt="" />
+          <img src="/images/nav/basket.jpg" alt="" />
           Gəlmə Gətirsinlər
         </Link>
         <div className="search-bar">
@@ -215,11 +223,10 @@ export default function SiteHeader() {
             })}
           </div>
         </div>
-        
-          <img src="images/nav/PhoneCall.svg" alt="" />
-          <span className="nav-dot" />
+        <div className="nav-phone">
+          <img className="nav-phone-icon" src="/images/nav/PhoneCall.svg" alt="" />
           +994-070-596-99-66
-        
+        </div>
       </nav>
     </div>
   );

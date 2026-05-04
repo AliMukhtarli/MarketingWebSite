@@ -1,0 +1,11 @@
+/* Baseline: prevent horizontal page scroll; images scale down inside layouts */
+html {
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}

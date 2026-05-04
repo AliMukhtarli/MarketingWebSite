@@ -105,9 +105,10 @@ export default function MarketingFooter() {
         }
         .sf-news-img {
           width: 100%; height: 180px;
-          object-fit: cover;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #B401A5;
+          background: #eef0f4;
         }
         .sf-news-body { padding: 20px; }
         .sf-news-meta {

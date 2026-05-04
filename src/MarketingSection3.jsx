@@ -56,7 +56,9 @@ function AccessoryCard({ product }) {
       {product.discount && (
         <span className="s3-badge s3-badge-discount">{product.discount}</span>
       )}
-      <img className="s3-acc-img" src={product.image} alt="" />
+      <div className="s3-acc-img-wrap">
+        <img className="s3-acc-img" src={product.image} alt="" />
+      </div>
       {hovered && (
         <div className="s3-hover-actions">
           <button className="s3-hover-btn">♡</button>
@@ -82,7 +84,9 @@ function AccessoryCard({ product }) {
 function MiniProductRow({ item }) {
   return (
     <div className="s3-mini-row">
-      <img className="s3-mini-img" src={item.image} alt="" />
+      <div className="s3-mini-img-wrap">
+        <img className="s3-mini-img" src={item.image} alt="" />
+      </div>
       <div className="s3-mini-info">
         <p className="s3-mini-name">{item.name}</p>
         <span className="s3-mini-price">${item.price.toLocaleString()}</span>
@@ -137,11 +141,23 @@ export default function MarketingSection3() {
           box-shadow: 0 6px 24px rgba(0,0,0,0.12);
           transform: translateY(-2px);
         }
+        .s3-acc-img-wrap {
+          width: 100%;
+          height: 120px;
+          background: #eef0f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+        }
         .s3-acc-img {
-          width: 100%; height: 120px;
-          object-fit: cover;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #B401A5;
         }
         .s3-badge {
           position: absolute; top: 10px; left: 10px;
@@ -196,6 +212,14 @@ export default function MarketingSection3() {
           width: 80px; height: 80px;
           background: #B401A5;
           border-radius: 8px;
+          margin: 0 auto 12px;
+        }
+        .s3-side-card-light > img {
+          max-width: min(140px, 100%);
+          height: auto;
+          max-height: 100px;
+          object-fit: contain;
+          display: block;
           margin: 0 auto 12px;
         }
         .s3-side-card-light h3 {
@@ -298,10 +322,14 @@ export default function MarketingSection3() {
           box-shadow: 0 4px 16px rgba(245,166,35,0.4);
           flex-shrink: 0;
         }
-        .s3-mac-img {
-          width: 280px; height: 200px;
-          background: #B401A5;
-          border-radius: 12px; flex-shrink: 0;
+        .s3-mac-photo {
+          width: min(280px, 100%);
+          max-height: 200px;
+          height: auto;
+          object-fit: contain;
+          border-radius: 12px;
+          flex-shrink: 0;
+          display: block;
         }
 
         /* ── FLASH SALE / BEST SELLERS / etc ── */
@@ -330,11 +358,23 @@ export default function MarketingSection3() {
         }
         .s3-mini-row:last-child { border-bottom: none; }
         .s3-mini-row:hover .s3-mini-name { color: #f5a623; }
+        .s3-mini-img-wrap {
+          width: 56px;
+          height: 56px;
+          flex-shrink: 0;
+          border-radius: 8px;
+          background: #eef0f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+        }
         .s3-mini-img {
-          width: 56px; height: 56px;
-          object-fit: cover;
-          border-radius: 8px; flex-shrink: 0;
-          background: #B401A5;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
           display: block;
         }
         .s3-mini-info {}
@@ -359,7 +399,7 @@ export default function MarketingSection3() {
         @media (max-width: 768px) {
           .s3-macbook-banner { margin: 16px; flex-direction: column; gap: 24px; padding: 28px 18px; align-items: flex-start; }
           .s3-mac-right { width: 100%; justify-content: space-between; }
-          .s3-mac-img { width: min(360px, 100%); height: 190px; }
+          .s3-mac-photo { max-height: 190px; }
           .s3-lists-section { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
@@ -414,7 +454,7 @@ export default function MarketingSection3() {
         </div>
         <div className="s3-mac-right">
           <div className="s3-mac-bubble">$1999</div>
-          <img src="/images/homepage/Mac.png" alt="" />
+          <img className="s3-mac-photo" src="/images/homepage/Mac.png" alt="" />
         </div>
       </div>
 

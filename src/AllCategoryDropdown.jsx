@@ -262,11 +262,13 @@ export default function AllCategoryDropdown() {
         .acd-product-row:hover { background: #fff3df; }
         .acd-product-img {
           width: 52px; height: 52px;
-          object-fit: cover;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #f5a623;
+          background: #eef0f4;
           border-radius: 6px;
           flex-shrink: 0;
+          padding: 4px;
         }
         .acd-product-name {
           font-size: 12px;
@@ -294,11 +296,13 @@ export default function AllCategoryDropdown() {
         }
         .acd-promo-img {
           width: 64px; height: 64px;
-          object-fit: cover;
+          object-fit: contain;
+          object-position: center;
           display: block;
-          background: #f5a623;
+          background: #eef0f4;
           border-radius: 8px;
           flex-shrink: 0;
+          padding: 4px;
         }
         .acd-promo-discount {
           font-family: 'Sora', sans-serif;
