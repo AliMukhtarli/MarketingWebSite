@@ -9,9 +9,24 @@ const categoryData = [
     featured: {
       title: "FEATURED PHONES",
       items: [
-        { name: "Samsung Electronics Samsung Galaxy S21 5G", price: "$160", oldPrice: null },
-        { name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone", price: "$1,500", oldPrice: null },
-        { name: "Sony DSCHX8 High Zoom Point & Shoot Camera", price: "$2,300", oldPrice: "$3,200" },
+        {
+          name: "Samsung Electronics Samsung Galaxy S21 5G",
+          price: "$160",
+          oldPrice: null,
+          image: "/images/homepage/SmartPhone.jpg",
+        },
+        {
+          name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone",
+          price: "$1,500",
+          oldPrice: null,
+          image: "/images/homepage/Phone1.jpg",
+        },
+        {
+          name: "Sony DSCHX8 High Zoom Point & Shoot Camera",
+          price: "$2,300",
+          oldPrice: "$3,200",
+          image: "/images/homepage/Camera.jpg",
+        },
       ],
     },
     promo: {
@@ -19,6 +34,7 @@ const categoryData = [
       title: "Discount",
       desc: "Escape the noise. It's time to hear the magic with Xiaomi Earbuds.",
       startingPrice: "$99 USD",
+      image: "/images/homepage/FlipBuds.jpg",
     },
   },
   { name: "Computer Accessories" },
@@ -246,6 +262,8 @@ export default function AllCategoryDropdown() {
         .acd-product-row:hover { background: #fff3df; }
         .acd-product-img {
           width: 52px; height: 52px;
+          object-fit: cover;
+          display: block;
           background: #f5a623;
           border-radius: 6px;
           flex-shrink: 0;
@@ -276,6 +294,8 @@ export default function AllCategoryDropdown() {
         }
         .acd-promo-img {
           width: 64px; height: 64px;
+          object-fit: cover;
+          display: block;
           background: #f5a623;
           border-radius: 8px;
           flex-shrink: 0;
@@ -345,8 +365,8 @@ export default function AllCategoryDropdown() {
             <div className="acd-right">
               <p className="acd-featured-title">{cat.featured.title}</p>
               {cat.featured.items.map((item, i) => (
-                <div className="acd-product-row" key={i}>
-                  <div className="acd-product-img" />
+                <div className="acd-product-row" key={`${item.name}-${i}`}>
+                  <img className="acd-product-img" src={item.image} alt="" />
                   <div style={{ minWidth: 0 }}>
                     <p className="acd-product-name">{item.name}</p>
                     <div className="acd-price-row">
@@ -359,7 +379,7 @@ export default function AllCategoryDropdown() {
 
               {cat.promo && (
                 <div className="acd-promo">
-                  <div className="acd-promo-img" />
+                  <img className="acd-promo-img" src={cat.promo.image} alt="" />
                   <div>
                     <p className="acd-promo-discount">
                       <span>{cat.promo.discount}</span> {cat.promo.title}

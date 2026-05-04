@@ -8,7 +8,7 @@ const news = [
     views: 453,
     title: "Cras nisl dolor, accumsan et metus sit amet, vulputate condimentum dolor.",
     desc: "Maecenas scelerisque, arcu quis tempus egestas, ligula diam molestie lectus, tincidunt malesuada arcu metus posuere metus.",
-    image: "/images/homepage/Monitor2.jpg",
+    image: "/images/homepage/News.jpg",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const news = [
     views: 738,
     title: "Curabitur pulvinar aliquam lectus, non blandit erat mattis vitae.",
     desc: "Mauris scelerisque odio id rutrum volutpat. Pellentesque urna odio, vulputate at tortor vitae, hendrerit blandit lorem.",
-    image: "/images/homepage/Camera.jpg",
+    image: "/images/homepage/News2.jpg",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const news = [
     views: 826,
     title: "Curabitur massa orci, consectetur et blandit ac, auctor et tellus.",
     desc: "Pellentesque vestibulum lorem vel gravida aliquam. Morbi porta, odio id suscipit mattis, risus augue condimentum purus.",
-    image: "/images/homepage/SmartPhone.jpg",
+    image: "/images/homepage/News3.jpg",
   },
 ];
 
