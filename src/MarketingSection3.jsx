@@ -169,7 +169,7 @@ export default function MarketingSection3() {
           display: flex; align-items: center; justify-content: center;
           transition: background 0.15s;
         }
-        .s3-hover-btn:hover { background: #B401A5; color: white; }
+        .s3-hover-btn:hover { background: #f5a623; color: white; }
         .s3-card-body { padding: 10px 12px 14px; }
         .s3-rating-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
         .s3-stars { display: flex; font-size: 12px; }
@@ -177,7 +177,7 @@ export default function MarketingSection3() {
         .s3-product-name { font-size: 12px; font-weight: 500; line-height: 1.4; color: #1a1f3c; margin-bottom: 6px; overflow-wrap: anywhere; word-break: break-word; }
         .s3-price-row { display: flex; align-items: center; gap: 6px; }
         .s3-old-price { font-size: 11px; color: #9ca3af; text-decoration: line-through; }
-        .s3-price { font-size: 14px; font-weight: 700; color: #B401A5; }
+        .s3-price { font-size: 14px; font-weight: 700; color: #f5a623; }
 
         /* ── RIGHT SIDEBAR CARDS ── */
         .s3-acc-right {
@@ -208,7 +208,7 @@ export default function MarketingSection3() {
           margin-bottom: 12px;
         }
         .s3-only-label { font-size: 11px; color: #6b7280; }
-        .s3-only-price { font-size: 14px; font-weight: 700; color: #B401A5; }
+        .s3-only-price { font-size: 14px; font-weight: 700; color: #f5a623; }
         .s3-shop-btn {
           background: #f5a623; color: white;
           border: none; border-radius: 6px;
@@ -327,7 +327,7 @@ export default function MarketingSection3() {
           transition: background 0.15s;
         }
         .s3-mini-row:last-child { border-bottom: none; }
-        .s3-mini-row:hover .s3-mini-name { color: #B401A5; }
+        .s3-mini-row:hover .s3-mini-name { color: #f5a623; }
         .s3-mini-img {
           width: 56px; height: 56px;
           background: #B401A5;
@@ -342,7 +342,7 @@ export default function MarketingSection3() {
         }
         .s3-mini-name { overflow-wrap: anywhere; word-break: break-word; }
         .s3-mini-price {
-          font-size: 13px; font-weight: 700; color: #B401A5;
+          font-size: 13px; font-weight: 700; color: #f5a623;
         }
 
         @media (max-width: 1100px) {

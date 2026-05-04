@@ -1,19 +1,19 @@
 import ReactDOM from "react-dom/client";
 import React from "react";
-import MarketingHome from "./MarketingHome";
-import MarketingSection2 from "./MarketingSection2";
-import MarketingSection3 from "./MarketingSection3";
-import MarketingFooter from "./MarketingFooter";
-import SiteHeader from "./SiteHeader";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import HomePage from "./HomePage";
+import TrackOrderPage from "./TrackOrderPage";
+import WishlistPage from "./WishlistPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <div>
-    <SiteHeader />
-    <MarketingHome hideHeader />
-    <MarketingSection2 />
-    <MarketingSection3 />
-    <MarketingFooter />
-  </div>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/wishlist" element={<WishlistPage />} />
+      <Route path="/track-order" element={<TrackOrderPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  </BrowserRouter>
 );

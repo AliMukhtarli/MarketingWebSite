@@ -1,3 +1,8 @@
+import { Link } from "react-router-dom";
+import AllCategoryDropdown from "./AllCategoryDropdown";
+import CartDropdown from "./CartDropdown";
+import LoginDropdown from "./LoginDropdown";
+
 export default function SiteHeader() {
   return (
     <div className="site-header">
@@ -41,7 +46,7 @@ export default function SiteHeader() {
         .social-dot:nth-child(5) { background: #E1306C; }
         .lang-currency { display: flex; gap: 8px; font-size: 12px; color: #ccc; }
         .lang-currency span { cursor: pointer; }
-        .lang-currency span:hover { color: var(--primary); }
+        .lang-currency span:hover { color: var(--accent); }
 
         /* HEADER */
         .header {
@@ -57,7 +62,8 @@ export default function SiteHeader() {
         .logo {
           display: flex; align-items: center; gap: 8px;
           font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 700; color: var(--text);
-          text-decoration: none; white-space: nowrap;
+          text-decoration: none;
+          white-space: nowrap;
         }
         .logo-box { width: 18px; height: 18px; background: var(--primary); border-radius: 3px; }
         .search-bar {
@@ -84,12 +90,6 @@ export default function SiteHeader() {
           transition: background 0.2s;
         }
         .icon-circle:hover { background: #f0f0f0; }
-        .cart-badge {
-          position: absolute; top: 0; right: 0;
-          background: var(--primary); color: white;
-          border-radius: 50%; width: 16px; height: 16px;
-          font-size: 10px; display: flex; align-items: center; justify-content: center;
-        }
 
         /* NAV BAR */
         .nav-bar {
@@ -97,9 +97,26 @@ export default function SiteHeader() {
           padding: 0 var(--page-pad);
           display: flex; align-items: center; justify-content: space-between;
           border-bottom: 1px solid var(--border);
-          overflow-x: auto;
+          overflow: visible;
         }
-        .nav-left { display: flex; gap: 0; align-items: center; }
+        .nav-left {
+          display: flex;
+          gap: 0;
+          align-items: center;
+          flex: 1;
+          min-width: 0;
+          overflow: visible;
+        }
+        .nav-scroll {
+          display: flex;
+          align-items: center;
+          min-width: 0;
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none; /* Firefox */
+        }
+        .nav-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
         .nav-item {
           display: flex; align-items: center; gap: 6px;
           padding: 12px 16px; font-size: 13px; font-weight: 500;
@@ -108,14 +125,13 @@ export default function SiteHeader() {
           transition: color 0.2s;
           white-space: nowrap;
           flex: 0 0 auto;
+          text-decoration: none;
         }
-        .nav-item:hover { color: var(--primary); }
-        .nav-item .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; flex-shrink: 0; }
-        .nav-item.all-cat { background: var(--primary); color: white; border-radius: 0; }
-        .nav-item.all-cat .nav-dot { background: white; }
-        .nav-item.all-cat:hover { background: var(--primary-dark); color: white; }
+        .nav-item:hover { color: var(--accent); }
+        .nav-item .nav-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+        /* all category styling is inside AllCategoryDropdown */
         .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-        .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; }
+        .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
 
         @media (max-width: 768px) {
           .search-bar { order: 3; flex: 1 1 100%; }
@@ -145,36 +161,38 @@ export default function SiteHeader() {
       </div>
 
       <header className="header">
-        <a className="logo" href="#">
+        <Link className="logo" to="/">
           <div className="logo-box" />
           Umico
-        </a>
+        </Link>
         <div className="search-bar">
           <input type="text" placeholder="Search for anything..." />
           <button>🔍</button>
         </div>
         <div className="header-icons">
-          <div className="icon-circle">
-            🛒
-            <span className="cart-badge">0</span>
-          </div>
-          <div className="icon-circle">♡</div>
-          <div className="icon-circle">👤</div>
+          <CartDropdown />
+          <Link className="icon-circle" to="/wishlist" title="Wishlist">
+            ♡
+          </Link>
+          <LoginDropdown />
         </div>
       </header>
 
       <nav className="nav-bar">
         <div className="nav-left">
-          <div className="nav-item all-cat">
-            <span className="nav-dot" />
-            All Category ▾
-          </div>
-          {["Track Order", "Compare", "Customer Support", "Need Help"].map((item) => (
-            <div className="nav-item" key={item}>
+          <AllCategoryDropdown />
+          <div className="nav-scroll">
+            <Link className="nav-item" to="/track-order">
               <span className="nav-dot" />
-              {item}
-            </div>
-          ))}
+              Track Order
+            </Link>
+            {["Compare", "Customer Support", "Need Help"].map((item) => (
+              <div className="nav-item" key={item}>
+                <span className="nav-dot" />
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="nav-phone">
           <span className="nav-dot" />

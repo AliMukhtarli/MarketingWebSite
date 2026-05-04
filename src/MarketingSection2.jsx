@@ -191,10 +191,10 @@ export default function Marketing2() {
           box-shadow: 0 8px 24px rgba(180,1,165,0.25);
         }
         .s2-cat-label {
-          font-size: 13px; font-weight: 500; color: #B401A5;
+          font-size: 13px; font-weight: 500; color: #f5a623;
           transition: color 0.2s;
         }
-        .s2-cat-item:hover .s2-cat-label { color: #8a0180; }
+        .s2-cat-item:hover .s2-cat-label { color: #f5a623; }
 
         /* ── FEATURED PRODUCTS ── */
         .s2-featured-section {
@@ -285,7 +285,7 @@ export default function Marketing2() {
           color: #1a1f3c;
           border-bottom: 2px solid #1a1f3c;
         }
-        .s2-tab:hover:not(.active) { color: #B401A5; }
+        .s2-tab:hover:not(.active) { color: #f5a623; }
         .s2-browse-all {
           background: none; border: none; cursor: pointer;
           color: #f5a623; font-size: 13px; font-weight: 600;
@@ -348,7 +348,7 @@ export default function Marketing2() {
           display: flex; align-items: center; justify-content: center;
           transition: background 0.15s, transform 0.15s;
         }
-        .s2-hover-btn:hover { background: #B401A5; color: white; transform: scale(1.1); }
+        .s2-hover-btn:hover { background: #f5a623; color: white; transform: scale(1.1); }
         .s2-card-body { padding: 10px 12px 14px; }
         .s2-rating-row {
           display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
@@ -359,7 +359,7 @@ export default function Marketing2() {
         .s2-product-name { overflow-wrap: anywhere; word-break: break-word; }
         .s2-price-row { display: flex; align-items: center; gap: 6px; }
         .s2-old-price { font-size: 11px; color: #9ca3af; text-decoration: line-through; }
-        .s2-price { font-size: 14px; font-weight: 700; color: #B401A5; }
+        .s2-price { font-size: 14px; font-weight: 700; color: #f5a623; }
 
         /* ── INTRO BANNERS ── */
         .s2-intro-banners {

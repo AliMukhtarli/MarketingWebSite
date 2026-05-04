@@ -207,7 +207,7 @@ export default function MarketingHome({ hideHeader = false }) {
         .social-dot:nth-child(5) { background: #E1306C; }
         .lang-currency { display: flex; gap: 8px; font-size: 12px; color: #ccc; }
         .lang-currency span { cursor: pointer; }
-        .lang-currency span:hover { color: var(--primary); }
+        .lang-currency span:hover { color: var(--accent); }
 
         /* HEADER */
         .header {
@@ -280,11 +280,11 @@ export default function MarketingHome({ hideHeader = false }) {
           white-space: nowrap;
           flex: 0 0 auto;
         }
-        .nav-item:hover { color: var(--primary); }
+        .nav-item:hover { color: var(--accent); }
         .nav-item .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; flex-shrink: 0; }
         .nav-item.all-cat { background: var(--white); color: var(--text); border-radius: 0; }
         .nav-item.all-cat .nav-dot { background: var(--white); }
-        .nav-item.all-cat:hover { background: var(--primary-dark); color: white; }
+        .nav-item.all-cat:hover { background: var(--accent); color: white; }
         .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
         .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 2px; }
 
@@ -311,8 +311,8 @@ export default function MarketingHome({ hideHeader = false }) {
           gap: 16px;
         }
         .hero-text { max-width: 300px; min-width: 0; }
-        .hero-tag { font-size: 11px; font-weight: 600; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--primary); }
+        .hero-tag { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--accent); }
         .hero-title { font-family: 'Sora', sans-serif; font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; color: var(--text); }
         .hero-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
         .shop-now-btn {
@@ -367,7 +367,7 @@ export default function MarketingHome({ hideHeader = false }) {
         }
         .side-bottom-img { width: 80px; height: 80px; background: var(--primary); border-radius: 8px; flex-shrink: 0; }
         .side-bottom-info h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-        .side-bottom-info .usd-price { color: var(--primary); font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .side-bottom-info .usd-price { color: var(--accent); font-size: 14px; font-weight: 700; margin-bottom: 8px; }
         .side-bottom-info .shop-now-btn { padding: 7px 14px; font-size: 12px; }
 
         /* FEATURES BAR */
@@ -459,13 +459,13 @@ export default function MarketingHome({ hideHeader = false }) {
           justify-content: center; font-size: 15px;
           transition: background 0.15s, transform 0.15s;
         }
-        .hover-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
+        .hover-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
 
         .product-name { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
         .product-name.small { font-size: 12px; }
         .price-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
         .old-price { font-size: 12px; color: var(--muted); text-decoration: line-through; }
-        .price { font-size: 15px; font-weight: 700; color: var(--primary); }
+        .price { font-size: 15px; font-weight: 700; color: var(--accent); }
 
         .stars { display: flex; font-size: 14px; }
         .review-count { font-size: 11px; color: var(--muted); }
@@ -481,7 +481,7 @@ export default function MarketingHome({ hideHeader = false }) {
           cursor: pointer; font-size: 16px;
           transition: border-color 0.15s, background 0.15s;
         }
-        .icon-btn:hover { border-color: var(--primary); background: #fdf0fd; }
+        .icon-btn:hover { border-color: var(--accent); background: #fff3df; }
         .add-to-card-btn {
           flex: 1; background: var(--accent); color: white;
           border: none; border-radius: 6px;
