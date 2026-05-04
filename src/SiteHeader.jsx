@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AllCategoryDropdown from "./AllCategoryDropdown";
 import CartDropdown from "./CartDropdown";
 import LoginDropdown from "./LoginDropdown";
+import SocialFollowLinks from "./SocialFollowLinks";
 
 /**
  * Icons: put files in `public/images/nav/` (`/images/...` = site root).
@@ -62,16 +63,7 @@ export default function SiteHeader() {
           gap: 10px;
           flex-wrap: wrap;
         }
-        .top-bar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-        .social-dots { display: flex; gap: 4px; }
-        .social-dot { width: 14px; height: 14px; border-radius: 3px; background: var(--primary); cursor: pointer; }
-        .social-dot:nth-child(2) { background: #4267B2; }
-        .social-dot:nth-child(3) { background: #1DA1F2; }
-        .social-dot:nth-child(4) { background: #FF0000; }
-        .social-dot:nth-child(5) { background: #E1306C; }
-        .lang-currency { display: flex; gap: 8px; font-size: 12px; color: #ccc; }
-        .lang-currency span { cursor: pointer; }
-        .lang-currency span:hover { color: var(--accent); }
+        .top-bar-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
         /* HEADER */
         .header {
@@ -170,32 +162,21 @@ export default function SiteHeader() {
           .nav-bar { display: none; }
         }
         @media (max-width: 480px) {
-          .social-dots { display: none; }
+          .top-bar { font-size: 11px; }
         }
       `}</style>
 
       <div className="top-bar">
-        <span>Welcome to Clicon online eCommerce store.</span>
+        <span>Yuxuların qənimi saytına xoş gəlmisiniz!!!</span>
         <div className="top-bar-right">
-          <span>Follow us:</span>
-          <div className="social-dots">
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-            <div className="social-dot" />
-          </div>
-          <div className="lang-currency">
-            <span>Eng ▾</span>
-            <span>USD ▾</span>
-          </div>
+          <SocialFollowLinks />
         </div>
       </div>
 
       <header className="header">
         <Link className="logo" to="/">
           <img src="images/nav/basket.jpg" width={40} alt="" />
-          Gəlmə Apar
+          Gəlmə Gətirsinlər
         </Link>
         <div className="search-bar">
           <input type="text" placeholder="Search for anything..." />
@@ -237,7 +218,7 @@ export default function SiteHeader() {
         
           <img src="images/nav/PhoneCall.svg" alt="" />
           <span className="nav-dot" />
-          +1-202-555-0104
+          +994-070-596-99-66
         
       </nav>
     </div>

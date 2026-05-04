@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SocialFollowLinks from "./SocialFollowLinks";
 
 const products = [
   {
@@ -246,19 +247,7 @@ export default function MarketingHome({ hideHeader = false }) {
           gap: 10px;
           flex-wrap: wrap;
         }
-        .top-bar-right { display: flex; gap: 16px; align-items: center; }
-        .social-dots { display: flex; gap: 4px; }
-        .social-dot {
-          width: 14px; height: 14px; border-radius: 3px;
-          background: var(--primary); cursor: pointer;
-        }
-        .social-dot:nth-child(2) { background: #4267B2; }
-        .social-dot:nth-child(3) { background: #1DA1F2; }
-        .social-dot:nth-child(4) { background: #FF0000; }
-        .social-dot:nth-child(5) { background: #E1306C; }
-        .lang-currency { display: flex; gap: 8px; font-size: 12px; color: #ccc; }
-        .lang-currency span { cursor: pointer; }
-        .lang-currency span:hover { color: var(--accent); }
+        .top-bar-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
         /* HEADER */
         .header {
@@ -608,7 +597,6 @@ export default function MarketingHome({ hideHeader = false }) {
         }
         @media (max-width: 480px) {
           .top-bar { font-size: 11px; }
-          .social-dots { display: none; }
           .header-icons { margin-left: auto; }
           .hero-banner { flex-direction: column; align-items: flex-start; padding: 18px; }
           .hero-img-placeholder { width: 100%; height: 180px; }
@@ -624,18 +612,7 @@ export default function MarketingHome({ hideHeader = false }) {
           <div className="top-bar">
             <span>Welcome to Clicon online eCommerce store.</span>
             <div className="top-bar-right">
-              <span>Follow us:</span>
-              <div className="social-dots">
-                <div className="social-dot" />
-                <div className="social-dot" />
-                <div className="social-dot" />
-                <div className="social-dot" />
-                <div className="social-dot" />
-              </div>
-              <div className="lang-currency">
-                <span>Eng ▾</span>
-                <span>USD ▾</span>
-              </div>
+              <SocialFollowLinks />
             </div>
           </div>
 
