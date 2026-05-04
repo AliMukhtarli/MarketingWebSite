@@ -2,28 +2,10 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
-
-const initialLines = [
-  {
-    id: 1,
-    name: "4K UHD LED Smart TV with Chromecast Built-in",
-    price: 70,
-    oldPrice: 99,
-    qty: 1,
-    img: "📺",
-  },
-  {
-    id: 2,
-    name: "Wired Over-Ear Gaming Headphones with USB",
-    price: 250,
-    oldPrice: null,
-    qty: 3,
-    img: "🎧",
-  },
-];
+import { useCart } from "./CartContext";
 
 export default function CartPage() {
-  const [lines, setLines] = useState(initialLines);
+  const { items: lines, loading, refreshCart, setLineQty, removeFromCart } = useCart();
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(24);
 
@@ -33,21 +15,29 @@ export default function CartPage() {
   );
 
   const shipping = 0;
-  const taxable = Math.max(0, linesSubtotal - discount);
+  const appliedDiscount = Math.min(linesSubtotal, discount);
+  const taxable = Math.max(0, linesSubtotal - appliedDiscount);
   const tax = Math.round(taxable * 0.0779 * 100) / 100;
   const orderTotal = taxable + tax + shipping;
 
-  const updateQty = (id, delta) => {
-    setLines((prev) =>
-      prev.map((row) => {
-        if (row.id !== id) return row;
-        const next = Math.max(1, row.qty + delta);
-        return { ...row, qty: next };
-      })
-    );
+  const updateQty = async (productId, delta) => {
+    const row = lines.find((r) => r.productId === productId);
+    if (!row) return;
+    const next = Math.max(1, row.qty + delta);
+    try {
+      await setLineQty(productId, next);
+    } catch {
+      /* cart refresh handles errors */
+    }
   };
 
-  const removeLine = (id) => setLines((prev) => prev.filter((r) => r.id !== id));
+  const removeLine = async (productId) => {
+    try {
+      await removeFromCart(productId);
+    } catch {
+      /* ignore */
+    }
+  };
 
   const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -170,6 +160,12 @@ export default function CartPage() {
           justify-content: center;
           font-size: 26px;
           flex-shrink: 0;
+          overflow: hidden;
+        }
+        .sc-thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
         .sc-name {
           font-size: 13px;
@@ -346,7 +342,11 @@ export default function CartPage() {
         <div className="sc-panel">
           <div className="sc-panel-title">Shopping Card</div>
 
-          {lines.length === 0 ? (
+          {loading ? (
+            <div className="sc-empty">
+              <p>Loading cart…</p>
+            </div>
+          ) : lines.length === 0 ? (
             <div className="sc-empty">
               <p>Your cart is empty.</p>
               <Link to="/" className="sc-btn-outline" style={{ marginTop: 16, display: "inline-flex" }}>
@@ -373,12 +373,14 @@ export default function CartPage() {
                             <button
                               type="button"
                               className="sc-remove"
-                              onClick={() => removeLine(row.id)}
+                              onClick={() => removeLine(row.productId)}
                               aria-label="Remove item"
                             >
                               ✕
                             </button>
-                            <div className="sc-thumb">{row.img}</div>
+                            <div className="sc-thumb">
+                              {row.image ? <img src={row.image} alt="" /> : row.emoji}
+                            </div>
                             <span className="sc-name">{row.name}</span>
                           </div>
                         </td>
@@ -390,11 +392,11 @@ export default function CartPage() {
                         </td>
                         <td style={{ textAlign: "center" }}>
                           <div className="sc-qty" style={{ margin: "0 auto" }}>
-                            <button type="button" onClick={() => updateQty(row.id, -1)} aria-label="Decrease">
+                            <button type="button" onClick={() => updateQty(row.productId, -1)} aria-label="Decrease">
                               −
                             </button>
                             <span>{pad2(row.qty)}</span>
-                            <button type="button" onClick={() => updateQty(row.id, 1)} aria-label="Increase">
+                            <button type="button" onClick={() => updateQty(row.productId, 1)} aria-label="Increase">
                               +
                             </button>
                           </div>
@@ -410,7 +412,7 @@ export default function CartPage() {
                 <Link to="/" className="sc-btn-outline">
                   ← RETURN TO SHOP
                 </Link>
-                <button type="button" className="sc-btn-outline">
+                <button type="button" className="sc-btn-outline" onClick={() => refreshCart()}>
                   UPDATE CART
                 </button>
               </div>
@@ -433,7 +435,7 @@ export default function CartPage() {
                 </div>
                 <div className="sc-total-row">
                   <span>Discount</span>
-                  <strong>${discount.toLocaleString()}</strong>
+                  <strong>${appliedDiscount.toLocaleString()}</strong>
                 </div>
                 <div className="sc-total-row">
                   <span>Tax</span>
@@ -446,7 +448,7 @@ export default function CartPage() {
                   ${orderTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
                 </span>
               </div>
-              <Link to="/checkout" className="sc-checkout">
+              <Link to="/checkout" state={{ discount: appliedDiscount }} className="sc-checkout">
                 PROCEED TO CHECKOUT →
               </Link>
             </div>

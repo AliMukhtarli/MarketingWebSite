@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
+import { useCart } from "./CartContext";
+import { apiFetch } from "./apiClient";
 
 const categories = [
   { id: 1, label: "Computer & Laptop", image: "/images/homepage/Monitor2.jpg" },
@@ -14,6 +17,7 @@ const tabs = ["All Product", "Smart Phone", "Laptop", "Headphone", "TV"];
 const featuredProducts = [
   {
     id: 1,
+    productId: 2,
     name: "TOZO T6 True Wireless Earbuds Bluetooth Headpho...",
     price: 70,
     rating: 4,
@@ -24,6 +28,7 @@ const featuredProducts = [
   },
   {
     id: 2,
+    productId: 3,
     name: "Samsung Electronics Samsung Galaxy S21 5G",
     price: 2300,
     rating: 4,
@@ -32,6 +37,7 @@ const featuredProducts = [
   },
   {
     id: 3,
+    productId: 10,
     name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...",
     price: 360,
     rating: 4,
@@ -42,6 +48,7 @@ const featuredProducts = [
   },
   {
     id: 4,
+    productId: 7,
     name: "Portable Washing Machine, 11lbs capacity Model 18NMF...",
     price: 80,
     rating: 3,
@@ -50,6 +57,7 @@ const featuredProducts = [
   },
   {
     id: 5,
+    productId: 11,
     name: "Wired Over-Ear Gaming Headphones with USB",
     price: 1500,
     rating: 5,
@@ -58,6 +66,7 @@ const featuredProducts = [
   },
   {
     id: 6,
+    productId: 5,
     name: "Polaroid 57-Inch Photo/Video Tripod with Deluxe Tripod Ca...",
     price: 1200,
     oldPrice: 1600,
@@ -68,6 +77,7 @@ const featuredProducts = [
   },
   {
     id: 7,
+    productId: 6,
     name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor",
     price: 250,
     rating: 5,
@@ -76,6 +86,7 @@ const featuredProducts = [
   },
   {
     id: 8,
+    productId: 4,
     name: "4K UHD LED Smart TV with Chromecast Built-in",
     price: 220,
     rating: 5,
@@ -98,6 +109,32 @@ function StarRating({ rating }) {
 
 function FeaturedProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
+  const { addToCart } = useCart();
+  const { user } = useAuth();
+  const pid = product.productId;
+
+  const handleAdd = async (e) => {
+    e.stopPropagation();
+    try {
+      await addToCart(pid, 1);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleWishlist = async (e) => {
+    e.stopPropagation();
+    if (!user) {
+      alert("Sign in to save items to your wishlist.");
+      return;
+    }
+    try {
+      await apiFetch("/api/wishlist", { method: "POST", body: { productId: pid } });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <div
       className="s2-product-card"
@@ -115,9 +152,15 @@ function FeaturedProductCard({ product }) {
       </div>
       {hovered && (
         <div className="s2-hover-actions">
-          <button className="s2-hover-btn" title="Like">♡</button>
-          <button className="s2-hover-btn" title="Add to Cart">🛒</button>
-          <button className="s2-hover-btn" title="Quick View">👁</button>
+          <button type="button" className="s2-hover-btn" title="Like" onClick={handleWishlist}>
+            ♡
+          </button>
+          <button type="button" className="s2-hover-btn" title="Add to Cart" onClick={handleAdd}>
+            🛒
+          </button>
+          <button type="button" className="s2-hover-btn" title="Quick View">
+            👁
+          </button>
         </div>
       )}
       <div className="s2-card-body">

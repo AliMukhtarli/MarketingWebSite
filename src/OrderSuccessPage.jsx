@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
 
 export default function OrderSuccessPage() {
+  const { state } = useLocation();
+  const orderNumber = state?.orderNumber;
   return (
     <div className="os-page">
       <style>{`
@@ -161,6 +163,12 @@ export default function OrderSuccessPage() {
         </div>
 
         <h1 className="os-title">Your order was successfully placed</h1>
+
+        {orderNumber && (
+          <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1f3c", marginBottom: 12 }}>
+            Order number: <span style={{ color: "#f5a623" }}>{orderNumber}</span>
+          </p>
+        )}
 
         <p className="os-desc">
           Pellentesque sed lectus nec tortor tristique accumsan quis dictum risus. Donec volutpat mollis nulla non

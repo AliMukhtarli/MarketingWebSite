@@ -9,12 +9,14 @@ import OrderSuccessPage from "./OrderSuccessPage";
 import TrackOrderPage from "./TrackOrderPage";
 import WishlistPage from "./WishlistPage";
 import { AuthProvider } from "./AuthContext";
+import { CartProvider } from "./CartContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
     <AuthProvider>
+    <CartProvider>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/wishlist" element={<WishlistPage />} />
@@ -24,6 +26,7 @@ root.render(
       <Route path="/track-order" element={<TrackOrderPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </CartProvider>
     </AuthProvider>
   </BrowserRouter>
 );

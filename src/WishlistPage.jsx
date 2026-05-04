@@ -1,66 +1,65 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
-
-const initialWishlist = [
-  {
-    id: 1,
-    img: "🎧",
-    name: "Bose Sport Earbuds -Wireless Earphones -Bluetooth In Ear Headphones for Workouts and Running, Triple Black",
-    price: 999,
-    oldPrice: 1299,
-    inStock: true,
-  },
-  {
-    id: 2,
-    img: "📱",
-    name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone",
-    price: 2300,
-    oldPrice: null,
-    inStock: true,
-  },
-  {
-    id: 3,
-    img: "🫧",
-    name: "Portable Washing Machine, 11lbs capacity Model 18NMFIAM",
-    price: 70,
-    oldPrice: null,
-    inStock: true,
-  },
-  {
-    id: 4,
-    img: "🎮",
-    name: "TOZO T6 True Wireless Earbuds Bluetooth Headphones Touch Control with Wireless Charging Case IPX8 Waterproof Stereo Earphones in-Ear",
-    price: 220,
-    oldPrice: 260,
-    inStock: false,
-  },
-  {
-    id: 5,
-    img: "📷",
-    name: "Wyze Cam Pan v2 1080p Pan/Tilt/Zoom Wi-Fi Indoor Smart Home Camera with Color Night Vision, 2-Way Audio",
-    price: 1499.99,
-    oldPrice: null,
-    inStock: true,
-  },
-];
+import { useAuth } from "./AuthContext";
+import { useCart } from "./CartContext";
+import { apiFetch } from "./apiClient";
 
 export default function WishlistPage() {
-  const [items, setItems] = useState(initialWishlist);
+  const { user, loading: authLoading } = useAuth();
+  const { addToCart } = useCart();
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [added, setAdded] = useState({});
+  const [error, setError] = useState(null);
 
-  const removeItem = (id) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
-    setAdded((prev) => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
+  const loadWishlist = useCallback(async () => {
+    setError(null);
+    try {
+      const data = await apiFetch("/api/wishlist");
+      setItems(data.items || []);
+    } catch (e) {
+      setError(e.message);
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      setLoading(false);
+      setItems([]);
+      return;
+    }
+    setLoading(true);
+    loadWishlist();
+  }, [authLoading, user, loadWishlist]);
+
+  const removeItem = async (productId) => {
+    try {
+      await apiFetch(`/api/wishlist/${productId}`, { method: "DELETE" });
+      setItems((prev) => prev.filter((i) => i.productId !== productId));
+      setAdded((prev) => {
+        const next = { ...prev };
+        delete next[productId];
+        return next;
+      });
+    } catch {
+      /* ignore */
+    }
   };
 
-  const handleAddToCart = (id) => {
-    setAdded((prev) => ({ ...prev, [id]: !prev[id] }));
+  const handleAddToCart = async (productId, inStock) => {
+    if (!inStock) return;
+    try {
+      await addToCart(productId, 1);
+      setAdded((prev) => ({ ...prev, [productId]: true }));
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
   return (
@@ -290,7 +289,24 @@ export default function WishlistPage() {
         <div className="wl-card">
           <div className="wl-card-title">Wishlist</div>
 
-          {items.length === 0 ? (
+          {!user && !authLoading ? (
+            <div className="wl-empty">
+              <div className="wl-empty-icon">🤍</div>
+              <h3>Sign in to view your wishlist</h3>
+              <p>Use the account menu in the header to sign in or create an account.</p>
+              <Link to="/" className="wl-empty-btn">
+                Continue Shopping →
+              </Link>
+            </div>
+          ) : loading ? (
+            <div className="wl-empty">
+              <p>Loading…</p>
+            </div>
+          ) : error ? (
+            <div className="wl-empty">
+              <p style={{ color: "#e53e3e" }}>{error}</p>
+            </div>
+          ) : items.length === 0 ? (
             <div className="wl-empty">
               <div className="wl-empty-icon">🤍</div>
               <h3>Your wishlist is empty</h3>
@@ -314,12 +330,22 @@ export default function WishlistPage() {
                 {items.map((item, idx) => (
                   <tr
                     className="wl-row"
-                    key={item.id}
+                    key={item.productId}
                     style={{ animationDelay: `${idx * 0.06}s` }}
                   >
                     <td>
                       <div className="wl-product-cell">
-                        <div className="wl-product-img">{item.img}</div>
+                        <div className="wl-product-img">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt=""
+                              style={{ width: 48, height: 48, objectFit: "contain", display: "block" }}
+                            />
+                          ) : (
+                            item.img
+                          )}
+                        </div>
                         <p className="wl-product-name">{item.name}</p>
                       </div>
                     </td>
@@ -340,11 +366,11 @@ export default function WishlistPage() {
                       <div className="wl-actions-cell">
                         <button
                           type="button"
-                          className={`wl-add-btn ${!item.inStock ? "disabled" : ""} ${added[item.id] ? "success" : ""}`}
-                          onClick={() => item.inStock && handleAddToCart(item.id)}
+                          className={`wl-add-btn ${!item.inStock ? "disabled" : ""} ${added[item.productId] ? "success" : ""}`}
+                          onClick={() => item.inStock && handleAddToCart(item.productId, item.inStock)}
                           disabled={!item.inStock}
                         >
-                          {added[item.id] ? "✓ ADDED" : "ADD TO CARD"} 🛒
+                          {added[item.productId] ? "✓ ADDED" : "ADD TO CARD"} 🛒
                         </button>
                       </div>
                     </td>
@@ -352,7 +378,7 @@ export default function WishlistPage() {
                       <button
                         type="button"
                         className="wl-remove-btn"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeItem(item.productId)}
                         title="Remove"
                       >
                         ✕

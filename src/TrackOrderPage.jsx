@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
+import { apiFetch } from "./apiClient";
 
 export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState("");
@@ -10,7 +11,7 @@ export default function TrackOrderPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleTrack = () => {
+  const handleTrack = async () => {
     if (!orderId.trim() || !email.trim()) {
       setError("Please fill in both fields.");
       return;
@@ -18,23 +19,18 @@ export default function TrackOrderPage() {
     setError("");
     setTracking(null);
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setTracking({
-        id: orderId,
-        email,
-        status: "In Transit",
-        date: "May 2, 2026",
-        eta: "May 6, 2026",
-        steps: [
-          { label: "Order Placed", done: true, date: "Apr 28, 2026" },
-          { label: "Processing", done: true, date: "Apr 29, 2026" },
-          { label: "Shipped", done: true, date: "May 1, 2026" },
-          { label: "In Transit", done: true, date: "May 2, 2026" },
-          { label: "Delivered", done: false, date: "Est. May 6, 2026" },
-        ],
+    try {
+      const q = new URLSearchParams({
+        orderNumber: orderId.trim(),
+        email: email.trim(),
       });
-    }, 1400);
+      const data = await apiFetch(`/api/orders/track?${q.toString()}`);
+      setTracking(data.tracking);
+    } catch (e) {
+      setError(e.message || "Could not find that order.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import SocialFollowLinks from "./SocialFollowLinks";
+import { useAuth } from "./AuthContext";
+import { useCart } from "./CartContext";
+import { apiFetch } from "./apiClient";
 
 const products = [
   {
@@ -18,7 +21,7 @@ const products = [
     id: 2,
     name: "Base Sport Earbuds -Wireless Earphones -Bluetooth In Ear...",
     price: 2300,
-    badge: "SOLD OUT",
+    badge: "HOT",
     image: "/images/homepage/FlipBuds.jpg",
   },
   {
@@ -151,6 +154,33 @@ function FeatureBarIcon({ variant }) {
 
 function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
+  const { addToCart } = useCart();
+  const { user } = useAuth();
+  const soldOut = product.badge === "SOLD OUT";
+
+  const handleAdd = async (e) => {
+    e?.stopPropagation?.();
+    if (soldOut) return;
+    try {
+      await addToCart(product.id, 1);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleWishlist = async (e) => {
+    e?.stopPropagation?.();
+    if (!user) {
+      alert("Sign in to save items to your wishlist.");
+      return;
+    }
+    try {
+      await apiFetch("/api/wishlist", { method: "POST", body: { productId: product.id } });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   if (product.large) {
     return (
       <div className="product-card large-card">
@@ -168,9 +198,21 @@ function ProductCard({ product }) {
         </div>
         <p className="product-desc">Games built using the Xbox Series X|S development kit showcase unparalleled load times, visuals.</p>
         <div className="card-actions-row">
-          <button className="icon-btn">♡</button>
-          <button className="add-to-card-btn">🛒 ADD TO CARD</button>
-          <button className="icon-btn">👁</button>
+          <button type="button" className="icon-btn" onClick={handleWishlist} aria-label="Add to wishlist">
+            ♡
+          </button>
+          <button
+            type="button"
+            className="add-to-card-btn"
+            onClick={handleAdd}
+            disabled={soldOut}
+            style={soldOut ? { opacity: 0.5, cursor: "not-allowed" } : undefined}
+          >
+            🛒 ADD TO CARD
+          </button>
+          <button type="button" className="icon-btn" aria-label="Quick view">
+            👁
+          </button>
         </div>
       </div>
     );
@@ -193,9 +235,15 @@ function ProductCard({ product }) {
       </div>
       {hovered && (
         <div className="hover-actions">
-          <button className="hover-btn" title="Like">♡</button>
-          <button className="hover-btn" title="Add to Cart">🛒</button>
-          <button className="hover-btn" title="Quick View">👁</button>
+          <button type="button" className="hover-btn" title="Like" onClick={handleWishlist}>
+            ♡
+          </button>
+          <button type="button" className="hover-btn" title="Add to Cart" onClick={handleAdd} disabled={soldOut}>
+            🛒
+          </button>
+          <button type="button" className="hover-btn" title="Quick View">
+            👁
+          </button>
         </div>
       )}
       <p className="product-name small">{product.name}</p>

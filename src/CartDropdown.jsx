@@ -1,26 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
-const initialItems = [
-  {
-    id: 1,
-    name: "Canon EOS 1500D DSLR Camera Body+ 18-55 mm",
-    qty: 1,
-    price: 1500,
-    img: "📷",
-  },
-  {
-    id: 2,
-    name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone",
-    qty: 2,
-    price: 269,
-    img: "🎧",
-  },
-];
+import { useCart } from "./CartContext";
 
 export default function CartDropdown() {
+  const { items, subtotal, lineCount, refreshCart, removeFromCart } = useCart();
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState(initialItems);
   const ref = useRef(null);
   const btnRef = useRef(null);
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0, width: 340 });
@@ -58,6 +42,10 @@ export default function CartDropdown() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (open) refreshCart();
+  }, [open, refreshCart]);
+
   const panelStyle = useMemo(
     () => ({
       top: `${panelPos.top}px`,
@@ -67,11 +55,9 @@ export default function CartDropdown() {
     [panelPos.left, panelPos.top, panelPos.width]
   );
 
-  const removeItem = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
-
-  const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-  /** Number of distinct product lines in the cart (not sum of quantities). */
-  const lineCount = items.length;
+  const removeItem = (productId) => {
+    removeFromCart(productId);
+  };
 
   return (
     <div className="cd-root" ref={ref}>
@@ -185,6 +171,12 @@ export default function CartDropdown() {
           font-size: 26px;
           flex-shrink: 0;
           border: 1px solid #e5e7eb;
+          overflow: hidden;
+        }
+        .cd-item-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         .cd-item-info { flex: 1; min-width: 0; }
@@ -324,7 +316,9 @@ export default function CartDropdown() {
             ) : (
               items.map((item) => (
                 <div className="cd-item" key={item.id}>
-                  <div className="cd-item-img">{item.img}</div>
+                  <div className="cd-item-img">
+                    {item.image ? <img src={item.image} alt="" /> : item.emoji}
+                  </div>
                   <div className="cd-item-info">
                     <p className="cd-item-name">{item.name}</p>
                     <div className="cd-item-qty-price">
@@ -335,7 +329,7 @@ export default function CartDropdown() {
                   <button
                     type="button"
                     className="cd-remove-btn"
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item.productId)}
                     aria-label={`Remove ${item.name}`}
                   >
                     ✕
@@ -349,7 +343,9 @@ export default function CartDropdown() {
             <>
               <div className="cd-subtotal">
                 <span className="cd-subtotal-label">Sub-Total:</span>
-                <span className="cd-subtotal-amount">${subtotal.toLocaleString()}.00 USD</span>
+                <span className="cd-subtotal-amount">
+                  ${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
+                </span>
               </div>
               <Link to="/checkout" className="cd-checkout-btn" onClick={() => setOpen(false)}>
                 CHECKOUT NOW →

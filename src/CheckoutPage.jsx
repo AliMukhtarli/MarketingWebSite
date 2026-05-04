@@ -1,18 +1,12 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SiteHeader from "./SiteHeader";
 import MarketingFooter from "./MarketingFooter";
+import { useCart } from "./CartContext";
+import { apiFetch } from "./apiClient";
 
-const orderLines = [
-  { id: 1, name: "Canon EOS 1500D DSLR Camera Body+ 18-55 mm", qty: 1, unit: 70, img: "📷" },
-  { id: 2, name: "Wired Over-Ear Gaming Headphones with USB", qty: 3, unit: 250, img: "🎧" },
-];
-
-const SUBTOTAL = orderLines.reduce((s, l) => s + l.qty * l.unit, 0);
-const DISCOUNT = 24;
 const SHIPPING = 0;
-const TAX = 61.99;
-const TOTAL = SUBTOTAL - DISCOUNT + TAX + SHIPPING;
+const TAX_RATE = 0.0779;
 
 const PAYMENT_METHODS = [
   { id: "cod", label: "Cash on Delivery" },
@@ -24,6 +18,15 @@ const PAYMENT_METHODS = [
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { items: orderLines, subtotal: SUBTOTAL, loading: cartLoading, refreshCart } = useCart();
+  const discountFromNav = location.state?.discount;
+  const rawDiscount = discountFromNav != null ? discountFromNav : 24;
+  const DISCOUNT = Math.min(SUBTOTAL, Math.max(0, rawDiscount));
+  const taxable = Math.max(0, SUBTOTAL - DISCOUNT);
+  const TAX = Math.round(taxable * TAX_RATE * 100) / 100;
+  const TOTAL = Math.round((taxable + TAX + SHIPPING) * 100) / 100;
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -41,6 +44,48 @@ export default function CheckoutPage() {
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvc, setCardCvc] = useState("");
   const [notes, setNotes] = useState("");
+  const [placing, setPlacing] = useState(false);
+  const [orderError, setOrderError] = useState("");
+
+  const canPlace = useMemo(
+    () => orderLines.length > 0 && firstName.trim() && lastName.trim() && email.trim(),
+    [orderLines.length, firstName, lastName, email]
+  );
+
+  const placeOrder = async () => {
+    setOrderError("");
+    if (!canPlace) {
+      setOrderError("Please fill in name and email.");
+      return;
+    }
+    setPlacing(true);
+    try {
+      const data = await apiFetch("/api/orders", {
+        method: "POST",
+        body: {
+          email: email.trim(),
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          company,
+          address,
+          country,
+          region,
+          city,
+          zip,
+          phone,
+          payment,
+          notes,
+          discount: DISCOUNT,
+        },
+      });
+      await refreshCart();
+      navigate("/order-success", { state: { orderNumber: data.order.orderNumber } });
+    } catch (e) {
+      setOrderError(e.message || "Could not place order.");
+    } finally {
+      setPlacing(false);
+    }
+  };
 
   return (
     <div className="co-page">
@@ -288,6 +333,9 @@ export default function CheckoutPage() {
 
       <div className="co-layout">
         <div className="co-main-col">
+          {orderError && (
+            <p style={{ color: "#e53e3e", fontSize: 14, fontWeight: 600, margin: 0 }}>⚠ {orderError}</p>
+          )}
           <section className="co-panel">
             <h2 className="co-section-title">Billing Information</h2>
 
@@ -420,13 +468,27 @@ export default function CheckoutPage() {
           <div className="co-panel">
             <h2 className="co-sum-title">Order Summary</h2>
 
+            {cartLoading && <p style={{ color: "#6b7280", fontSize: 14 }}>Loading cart…</p>}
+            {!cartLoading && orderLines.length === 0 && (
+              <p style={{ color: "#6b7280", fontSize: 14 }}>Your cart is empty. <Link to="/">Continue shopping</Link></p>
+            )}
             {orderLines.map((line) => (
               <div className="co-sum-item" key={line.id}>
-                <div className="co-sum-thumb">{line.img}</div>
+                <div className="co-sum-thumb">
+                  {line.image ? (
+                    <img
+                      src={line.image}
+                      alt=""
+                      style={{ width: 40, height: 40, objectFit: "contain", display: "block" }}
+                    />
+                  ) : (
+                    line.emoji
+                  )}
+                </div>
                 <div className="co-sum-info">
                   <p className="co-sum-name">{line.name}</p>
                   <p className="co-sum-price">
-                    {line.qty} × ${line.unit.toLocaleString()}
+                    {line.qty} × ${line.price.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -459,9 +521,10 @@ export default function CheckoutPage() {
             <button
               type="button"
               className="co-place-order"
-              onClick={() => navigate("/order-success")}
+              onClick={placeOrder}
+              disabled={placing || !canPlace}
             >
-              PLACE ORDER →
+              {placing ? "PLACING…" : "PLACE ORDER →"}
             </button>
           </div>
         </aside>

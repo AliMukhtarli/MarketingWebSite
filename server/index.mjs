@@ -10,6 +10,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 import db from "./db.mjs";
+import { mergeGuestCartToUser, mountShopRoutes } from "./shop.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3001;
@@ -22,7 +23,8 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: IS_PROD ? true : ["http://localhost:5173", "http://127.0.0.1:5173"],
+    /** Reflect request Origin so dev works on localhost, 127.0.0.1, or LAN IP (e.g. phone). */
+    origin: true,
     credentials: true,
   })
 );
@@ -33,7 +35,7 @@ app.use(
     name: "hocam.sid",
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       httpOnly: true,
       secure: IS_PROD,
@@ -51,7 +53,7 @@ function currentUser(req) {
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "hocam-api" });
+  res.json({ ok: true, service: "hocam-api", shopApi: true });
 });
 
 app.get("/api/auth/me", (req, res) => {
@@ -82,6 +84,7 @@ app.post("/api/auth/register", (req, res) => {
     .run(email, password_hash, name);
 
   req.session.userId = info.lastInsertRowid;
+  mergeGuestCartToUser(req);
   const user = db.prepare("SELECT id, email, name, created_at FROM users WHERE id = ?").get(info.lastInsertRowid);
   res.status(201).json({ user });
 });
@@ -96,9 +99,12 @@ app.post("/api/auth/login", (req, res) => {
   }
 
   req.session.userId = row.id;
+  mergeGuestCartToUser(req);
   const user = { id: row.id, email: row.email, name: row.name, created_at: row.created_at };
   res.json({ user });
 });
+
+mountShopRoutes(app);
 
 app.post("/api/auth/logout", (req, res) => {
   req.session.destroy((err) => {
