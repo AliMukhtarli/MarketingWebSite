@@ -8,11 +8,13 @@ import HomePage from "./HomePage";
 import OrderSuccessPage from "./OrderSuccessPage";
 import TrackOrderPage from "./TrackOrderPage";
 import WishlistPage from "./WishlistPage";
+import { AuthProvider } from "./AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/wishlist" element={<WishlistPage />} />
@@ -22,5 +24,6 @@ root.render(
       <Route path="/track-order" element={<TrackOrderPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </AuthProvider>
   </BrowserRouter>
 );

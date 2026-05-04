@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useAuth } from "./AuthContext";
 
 export default function LoginDropdown() {
+  const { user, loading, login, register, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [panelMode, setPanelMode] = useState("login");
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [name, setName] = useState("");
+  const [formError, setFormError] = useState("");
+  const [pending, setPending] = useState(false);
   const ref = useRef(null);
   const btnRef = useRef(null);
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0, width: 320 });
@@ -50,6 +57,61 @@ export default function LoginDropdown() {
     }),
     [panelPos.left, panelPos.top, panelPos.width]
   );
+
+  useEffect(() => {
+    if (!open) {
+      setFormError("");
+      setPassword("");
+      setPassword2("");
+    }
+  }, [open]);
+
+  const handleLogin = async () => {
+    setFormError("");
+    setPending(true);
+    try {
+      await login(email.trim(), password);
+      setPassword("");
+      setOpen(false);
+    } catch (e) {
+      setFormError(e.message || "Login failed.");
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const handleRegister = async () => {
+    setFormError("");
+    if (password !== password2) {
+      setFormError("Passwords do not match.");
+      return;
+    }
+    setPending(true);
+    try {
+      await register({ email: email.trim(), password, name: name.trim() || undefined });
+      setPassword("");
+      setPassword2("");
+      setName("");
+      setOpen(false);
+    } catch (e) {
+      setFormError(e.message || "Could not create account.");
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    setFormError("");
+    setPending(true);
+    try {
+      await logout();
+      setOpen(false);
+    } catch (e) {
+      setFormError(e.message || "Sign out failed.");
+    } finally {
+      setPending(false);
+    }
+  };
 
   return (
     <div className="ld-root" ref={ref}>
@@ -120,8 +182,9 @@ export default function LoginDropdown() {
           font-size: 18px; font-weight: 700;
           color: #1a1f3c;
           text-align: center;
-          margin-bottom: 24px;
+          margin-bottom: 8px;
         }
+        .ld-sub { text-align: center; font-size: 12px; color: #6b7280; margin-bottom: 20px; }
 
         .ld-field { margin-bottom: 16px; }
         .ld-label {
@@ -188,16 +251,17 @@ export default function LoginDropdown() {
           cursor: pointer;
           display: flex; align-items: center;
           justify-content: center; gap: 8px;
-          margin-top: 20px;
+          margin-top: 8px;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
           letter-spacing: 0.5px;
           box-shadow: 0 4px 14px rgba(245,166,35,0.35);
         }
-        .ld-login-btn:hover {
+        .ld-login-btn:hover:not(:disabled) {
           background: #e0920f;
           transform: translateY(-1px);
           box-shadow: 0 6px 20px rgba(245,166,35,0.45);
         }
+        .ld-login-btn:disabled { opacity: 0.65; cursor: not-allowed; }
         .ld-login-btn:active { transform: translateY(0); }
 
         .ld-divider {
@@ -223,7 +287,59 @@ export default function LoginDropdown() {
           transition: background 0.2s, color 0.2s;
           letter-spacing: 0.5px;
         }
-        .ld-create-btn:hover { background: #fff8ed; }
+        .ld-create-btn:hover:not(:disabled) { background: #fff8ed; }
+        .ld-create-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+        .ld-error {
+          background: #fef2f2;
+          color: #b91c1c;
+          font-size: 13px;
+          padding: 10px 12px;
+          border-radius: 8px;
+          margin-bottom: 14px;
+        }
+        .ld-account-box {
+          text-align: center;
+          padding: 8px 0 16px;
+        }
+        .ld-account-email {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1a1f3c;
+          word-break: break-all;
+        }
+        .ld-signout-btn {
+          width: 100%;
+          margin-top: 16px;
+          background: #1a1f3c;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 12px;
+          font-size: 14px;
+          font-weight: 700;
+          font-family: inherit;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .ld-signout-btn:hover:not(:disabled) { background: #2d3558; }
+        .ld-signout-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+        .ld-switch {
+          margin-top: 14px;
+          text-align: center;
+          font-size: 13px;
+          color: #6b7280;
+        }
+        .ld-switch button {
+          background: none;
+          border: none;
+          color: #f5a623;
+          font-weight: 700;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: inherit;
+          text-decoration: underline;
+        }
       `}</style>
 
       <button
@@ -231,70 +347,166 @@ export default function LoginDropdown() {
         type="button"
         className={`ld-icon-btn ${open ? "active" : ""}`}
         onClick={() => setOpen((o) => !o)}
-        title="Sign in"
+        title={user ? "Account" : "Sign in"}
         aria-expanded={open}
         aria-haspopup="dialog"
       >
         👤
-        {open && <span className="ld-active-dot" aria-hidden />}
+        {(open || user) && <span className="ld-active-dot" aria-hidden />}
       </button>
 
       {open && (
-        <div className="ld-panel" style={panelStyle} role="dialog" aria-label="Sign in">
-          <h2 className="ld-title">Sign in to your account</h2>
+        <div className="ld-panel" style={panelStyle} role="dialog" aria-label="Account">
+          {loading ? (
+            <>
+              <h2 className="ld-title">Loading…</h2>
+              <p className="ld-sub">Checking your session.</p>
+            </>
+          ) : user ? (
+            <>
+              <h2 className="ld-title">You&apos;re signed in</h2>
+              <div className="ld-account-box">
+                <p className="ld-account-email">{user.email}</p>
+                {user.name && <p className="ld-sub" style={{ marginTop: 6 }}>{user.name}</p>}
+              </div>
+              <button type="button" className="ld-signout-btn" onClick={handleLogout} disabled={pending}>
+                {pending ? "Signing out…" : "SIGN OUT"}
+              </button>
+              {formError && <p className="ld-error" style={{ marginTop: 14 }}>{formError}</p>}
+            </>
+          ) : panelMode === "login" ? (
+            <>
+              <h2 className="ld-title">Sign in to your account</h2>
+              {formError && <div className="ld-error">{formError}</div>}
+              <div className="ld-field">
+                <label className="ld-label" htmlFor="ld-email">Email Address</label>
+                <div className="ld-input-wrap">
+                  <input
+                    id="ld-email"
+                    className="ld-input"
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
 
-          <div className="ld-field">
-            <label className="ld-label" htmlFor="ld-email">Email Address</label>
-            <div className="ld-input-wrap">
-              <input
-                id="ld-email"
-                className="ld-input"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div>
+              <div className="ld-field">
+                <div className="ld-pass-label-row">
+                  <label className="ld-label" htmlFor="ld-password" style={{ margin: 0 }}>
+                    Password
+                  </label>
+                  <span className="ld-forget" role="presentation">
+                    Forgot password
+                  </span>
+                </div>
+                <div className="ld-input-wrap">
+                  <input
+                    id="ld-password"
+                    className="ld-input has-icon"
+                    type={showPass ? "text" : "password"}
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                  />
+                  <button
+                    type="button"
+                    className="ld-eye-btn"
+                    onClick={() => setShowPass((s) => !s)}
+                    aria-label={showPass ? "Hide password" : "Show password"}
+                  >
+                    {showPass ? "🙈" : "👁"}
+                  </button>
+                </div>
+              </div>
 
-          <div className="ld-field">
-            <div className="ld-pass-label-row">
-              <label className="ld-label" htmlFor="ld-password" style={{ margin: 0 }}>
-                Password
-              </label>
-              <a className="ld-forget" href="#" onClick={(e) => e.preventDefault()}>
-                Forget Password
-              </a>
-            </div>
-            <div className="ld-input-wrap">
-              <input
-                id="ld-password"
-                className="ld-input has-icon"
-                type={showPass ? "text" : "password"}
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <button type="button" className="ld-login-btn" onClick={handleLogin} disabled={pending}>
+                {pending ? "…" : "LOGIN →"}
+              </button>
+
+              <div className="ld-divider">Don&apos;t have an account?</div>
+
               <button
                 type="button"
-                className="ld-eye-btn"
-                onClick={() => setShowPass((s) => !s)}
-                aria-label={showPass ? "Hide password" : "Show password"}
+                className="ld-create-btn"
+                disabled={pending}
+                onClick={() => {
+                  setPanelMode("register");
+                  setFormError("");
+                }}
               >
-                {showPass ? "🙈" : "👁"}
+                CREATE ACCOUNT
               </button>
-            </div>
-          </div>
-
-          <button type="button" className="ld-login-btn">
-            LOGIN →
-          </button>
-
-          <div className="ld-divider">Don&apos;t have account</div>
-
-          <button type="button" className="ld-create-btn">
-            CREATE ACCOUNT
-          </button>
+            </>
+          ) : (
+            <>
+              <h2 className="ld-title">Create account</h2>
+              <p className="ld-sub">Password must be at least 6 characters.</p>
+              {formError && <div className="ld-error">{formError}</div>}
+              <div className="ld-field">
+                <label className="ld-label" htmlFor="ld-name">Name (optional)</label>
+                <input
+                  id="ld-name"
+                  className="ld-input"
+                  type="text"
+                  autoComplete="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="ld-field">
+                <label className="ld-label" htmlFor="ld-reg-email">Email</label>
+                <input
+                  id="ld-reg-email"
+                  className="ld-input"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="ld-field">
+                <label className="ld-label" htmlFor="ld-reg-pass">Password</label>
+                <input
+                  id="ld-reg-pass"
+                  className="ld-input"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="ld-field">
+                <label className="ld-label" htmlFor="ld-reg-pass2">Confirm password</label>
+                <input
+                  id="ld-reg-pass2"
+                  className="ld-input"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password2}
+                  onChange={(e) => setPassword2(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleRegister()}
+                />
+              </div>
+              <button type="button" className="ld-login-btn" onClick={handleRegister} disabled={pending}>
+                {pending ? "…" : "REGISTER →"}
+              </button>
+              <div className="ld-switch">
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPanelMode("login");
+                    setFormError("");
+                  }}
+                >
+                  Sign in
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
