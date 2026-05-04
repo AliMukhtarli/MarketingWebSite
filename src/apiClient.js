@@ -1,4 +1,3 @@
-/** Base URL for API (empty = same origin; use Vite proxy in dev/preview, or Express in production). */
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 
 function resolveUrl(path) {
@@ -7,7 +6,6 @@ function resolveUrl(path) {
   return `${API_BASE}${p}`;
 }
 
-/** Same-origin in dev via Vite proxy (/api → backend on port 3001). Use relative URLs unless VITE_API_BASE_URL is set. */
 export async function apiFetch(path, options = {}) {
   const url = resolveUrl(path);
   const headers = { ...options.headers };

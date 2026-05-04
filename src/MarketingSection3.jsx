@@ -323,7 +323,7 @@ export default function MarketingSection3() {
           flex-shrink: 0;
         }
         .s3-mac-photo {
-          width: min(280px, 100%);
+          width: min(380px, 100%);
           max-height: 200px;
           height: auto;
           object-fit: contain;

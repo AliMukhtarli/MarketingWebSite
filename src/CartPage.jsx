@@ -26,17 +26,13 @@ export default function CartPage() {
     const next = Math.max(1, row.qty + delta);
     try {
       await setLineQty(productId, next);
-    } catch {
-      /* cart refresh handles errors */
-    }
+    } catch {}
   };
 
   const removeLine = async (productId) => {
     try {
       await removeFromCart(productId);
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   };
 
   const pad2 = (n) => String(n).padStart(2, "0");

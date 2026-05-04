@@ -47,9 +47,7 @@ export default function WishlistPage() {
         delete next[productId];
         return next;
       });
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   };
 
   const handleAddToCart = async (productId, inStock) => {

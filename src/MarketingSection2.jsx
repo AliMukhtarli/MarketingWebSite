@@ -253,6 +253,10 @@ export default function Marketing2() {
         }
         .s2-cat-item:hover .s2-cat-label { color: #f5a623; }
 
+        .AccesuarsImage{
+        margin-bottom:0;
+        }
+
         /* ── FEATURED PRODUCTS ── */
         .s2-featured-section {
           padding: 16px var(--page-pad) 40px;
@@ -560,7 +564,7 @@ export default function Marketing2() {
             </div>
             <button className="s2-shop-btn">SHOP NOW →</button>
           </div>
-          <img src="/images/homepage/Accesuars.jpg" alt=""  className="AccesuarsImage"/>
+          <img src="/images/homepage/Accesuars.jpg" alt="" id="AccesuarsImage" />
         </div>
 
         {/* Right: tabs + grid */}

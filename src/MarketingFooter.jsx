@@ -375,11 +375,11 @@ export default function MarketingFooter() {
             <div className="sf-brand-logo">
               Gəlmə Gətirsinlər
             </div>
-            <p className="sf-brand-phone">(629) 555-0129</p>
+            <p className="sf-brand-phone">+994-070-596-99-66</p>
             <p className="sf-brand-addr">
-              4517 Washington Ave.<br />Manchester, Kentucky 39495
+              4517 Shovket Memmedov Ave.<br /> Baku, Azerbaijan
             </p>
-            <p className="sf-brand-email">info@kinbo.com</p>
+            <p className="sf-brand-email">alimukhtarki085"gmail.com</p>
           </div>
 
           {/* Top Category */}
@@ -446,7 +446,7 @@ export default function MarketingFooter() {
 
         {/* Bottom bar */}
         <div className="sf-bottom-bar">
-          Kinbo -eCommerce Template © 2021. Design by Templatecookie
+          Gəlmə gətirsinlər -eCommerce Template © 2026. Design by AliMukhtarli
         </div>
       </footer>
     </div>

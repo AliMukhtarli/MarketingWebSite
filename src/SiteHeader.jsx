@@ -5,9 +5,6 @@ import CartDropdown from "./CartDropdown";
 import LoginDropdown from "./LoginDropdown";
 import SocialFollowLinks from "./SocialFollowLinks";
 
-/**
- * Icons: put files in `public/images/nav/` (`/images/...` = site root).
- */
 const NAV_LINKS = [
   { label: "Track Order", to: "/track-order", icon: "/images/nav/TrackOrder.svg" },
   { label: "Compare", icon: "/images/nav/Compare.svg" },
@@ -47,7 +44,6 @@ export default function SiteHeader() {
 
   return (
     <>
-      {/* Spacer so fixed header doesn't cover page content */}
       <div aria-hidden style={{ height: spacerH }} />
 
       <div className="site-header" ref={headerRef}>
@@ -66,7 +62,6 @@ export default function SiteHeader() {
           --white: #ffffff;
         }
 
-        /* Sticky can break if any parent has overflow/transform; fixed is more reliable. */
         .site-header {
           position: fixed;
           top: 0;
@@ -78,7 +73,6 @@ export default function SiteHeader() {
 
         :root { --page-pad: clamp(16px, 3vw, 40px); }
 
-        /* TOP BAR */
         .top-bar {
           background: var(--navy);
           color: #ccc;
@@ -92,7 +86,6 @@ export default function SiteHeader() {
         }
         .top-bar-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
-        /* HEADER */
         .header {
           background: var(--white);
           padding: 12px var(--page-pad);
@@ -143,7 +136,6 @@ export default function SiteHeader() {
         }
         .icon-circle:hover { background: #f0f0f0; }
 
-        /* NAV BAR */
         .nav-bar {
           background: var(--white);
           padding: 10px var(--page-pad) 8px;
@@ -166,9 +158,9 @@ export default function SiteHeader() {
           overflow-x: auto;
           overflow-y: hidden;
           -webkit-overflow-scrolling: touch;
-          scrollbar-width: none; /* Firefox */
+          scrollbar-width: none;
         }
-        .nav-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .nav-scroll::-webkit-scrollbar { display: none; }
         .nav-item {
           display: flex; align-items: center; gap: 6px;
           padding: 12px 16px; font-size: 13px; font-weight: 500;
@@ -188,7 +180,6 @@ export default function SiteHeader() {
           flex-shrink: 0;
           display: block;
         }
-        /* all category styling is inside AllCategoryDropdown */
         .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; }
         .nav-phone-icon { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
 
