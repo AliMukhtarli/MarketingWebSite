@@ -6,7 +6,7 @@ const categories = [
   { id: 3, label: "Headphones", image: "/images/homepage/Headphone.jpg" },
   { id: 4, label: "Accessories", image: "/images/homepage/Monitor.jpg" },
   { id: 5, label: "Camera & Photo", image: "/images/homepage/Camera.jpg" },
-  { id: 6, label: "TV & Homes", image: "/images/homepage/XboxConsole.jpg" },
+  { id: 6, label: "TV & Homes", image: "/images/homepage/TV.jpg" },
 ];
 
 const tabs = ["All Product", "Smart Phone", "Laptop", "Headphone", "TV"];
@@ -20,6 +20,7 @@ const featuredProducts = [
     reviews: 738,
     badge: "HOT",
     badgeType: "hot",
+    image: "/images/homepage/Phone1.jpg",
   },
   {
     id: 2,
@@ -27,6 +28,7 @@ const featuredProducts = [
     price: 2300,
     rating: 4,
     reviews: 536,
+    image: "/images/homepage/Phone0.jpg",
   },
   {
     id: 3,
@@ -36,6 +38,7 @@ const featuredProducts = [
     reviews: 423,
     badge: "BEST DEALS",
     badgeType: "best",
+    image: "/images/homepage/AirConditioner.jpg",
   },
   {
     id: 4,
@@ -43,6 +46,7 @@ const featuredProducts = [
     price: 80,
     rating: 3,
     reviews: 810,
+    image: "/images/homepage/Headphones2.jpg",
   },
   {
     id: 5,
@@ -50,6 +54,7 @@ const featuredProducts = [
     price: 1500,
     rating: 5,
     reviews: 647,
+    image: "/images/homepage/Drone2.jpg",
   },
   {
     id: 6,
@@ -59,6 +64,7 @@ const featuredProducts = [
     rating: 4,
     reviews: 877,
     discount: "25% OFF",
+    image: "/images/homepage/TV.jpg",
   },
   {
     id: 7,
@@ -66,6 +72,7 @@ const featuredProducts = [
     price: 250,
     rating: 5,
     reviews: 426,
+    image: "/images/homepage/Monitor3.jpg",
   },
   {
     id: 8,
@@ -75,6 +82,7 @@ const featuredProducts = [
     reviews: 583,
     badge: "SALE",
     badgeType: "sale",
+    image: "/images/homepage/TV.jpg",
   },
 ];
 
@@ -102,7 +110,7 @@ function FeaturedProductCard({ product }) {
       {product.discount && (
         <span className="s2-badge s2-badge-discount">{product.discount}</span>
       )}
-      <div className="s2-product-img" />
+      <img className="s2-product-img" src={product.image} alt="" />
       {hovered && (
         <div className="s2-hover-actions">
           <button className="s2-hover-btn" title="Like">♡</button>
@@ -317,7 +325,10 @@ export default function Marketing2() {
           transform: translateY(-2px);
         }
         .s2-product-img {
-          width: 100%; height: 130px;
+          width: 100%;
+          height: 130px;
+          object-fit: cover;
+          display: block;
           background: #B401A5;
         }
         .s2-badge {
@@ -497,7 +508,7 @@ export default function Marketing2() {
             </div>
             <button className="s2-shop-btn">SHOP NOW →</button>
           </div>
-          <div className="s2-discount-img" />
+          <img src="/images/homepage/Accesuars.jpg" alt="" />
         </div>
 
         {/* Right: tabs + grid */}
