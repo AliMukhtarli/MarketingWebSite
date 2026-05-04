@@ -373,12 +373,12 @@ export default function Marketing2() {
         }
         .s2-product-img-wrap {
           width: 100%;
-          height: 130px;
+          height: 155px;
           background: #eef0f4;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 8px;
+          padding: 4px;
         }
         .s2-product-img {
           max-width: 100%;
@@ -560,7 +560,7 @@ export default function Marketing2() {
             </div>
             <button className="s2-shop-btn">SHOP NOW →</button>
           </div>
-          <img src="/images/homepage/Accesuars.jpg" alt="" />
+          <img src="/images/homepage/Accesuars.jpg" alt=""  className="AccesuarsImage"/>
         </div>
 
         {/* Right: tabs + grid */}

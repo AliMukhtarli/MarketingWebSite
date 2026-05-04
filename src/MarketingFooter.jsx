@@ -373,8 +373,7 @@ export default function MarketingFooter() {
           {/* Brand */}
           <div>
             <div className="sf-brand-logo">
-              <div className="sf-logo-box" />
-              Gəlmə Apar
+              Gəlmə Gətirsinlər
             </div>
             <p className="sf-brand-phone">(629) 555-0129</p>
             <p className="sf-brand-addr">

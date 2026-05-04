@@ -583,16 +583,16 @@ export default function MarketingHome({ hideHeader = false }) {
 
         .product-thumb-wrap {
           width: 100%;
-          height: 120px;
+          height: 150px;
           margin-bottom: 8px;
           border-radius: 8px;
           background: #eef0f4;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 8px;
+          padding: 4px;
         }
-        .large-card .product-thumb-wrap { height: 220px; }
+        .large-card .product-thumb-wrap { height: 270px; }
         .product-thumb-wrap .product-thumb {
           max-width: 100%;
           max-height: 100%;

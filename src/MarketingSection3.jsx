@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const accessories = [
-  { id: 1, name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...", price: 360, rating: 4, reviews: 594, badge: "BEST DEALS", badgeType: "best", image: "/images/homepage/Accesuars.jpg" },
+  { id: 1, name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...", price: 360, rating: 4, reviews: 594, badge: "BEST DEALS", badgeType: "best", image: "/images/homepage/HDMI.jpg" },
   { id: 2, name: "Portable Washing Machine, 11lbs capacity Model 18NMF...", price: 80, rating: 4, reviews: 7980, image: "/images/homepage/AirConditioner.jpg" },
   { id: 3, name: "TOZO T6 True Wireless Earbuds Bluetooth Headphon...", price: 70, rating: 5, reviews: 500, badge: "HOT", badgeType: "hot", image: "/images/homepage/FlipBuds.jpg" },
   { id: 4, name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor", price: 250, rating: 4, reviews: 450, image: "/images/homepage/Monitor2.jpg" },
@@ -143,12 +143,12 @@ export default function MarketingSection3() {
         }
         .s3-acc-img-wrap {
           width: 100%;
-          height: 120px;
+          height: 150px;
           background: #eef0f4;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 8px;
+          padding: 4px;
         }
         .s3-acc-img {
           max-width: 100%;
