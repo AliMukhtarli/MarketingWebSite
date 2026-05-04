@@ -261,6 +261,8 @@ export default function CartDropdown() {
           letter-spacing: 0.5px;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
           box-shadow: 0 4px 14px rgba(245,166,35,0.35);
+          text-decoration: none;
+          box-sizing: border-box;
         }
         .cd-checkout-btn:hover {
           background: #e0920f;
