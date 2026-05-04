@@ -70,7 +70,8 @@ export default function CartDropdown() {
   const removeItem = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
 
   const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-  const totalCount = items.reduce((sum, i) => sum + i.qty, 0);
+  /** Number of distinct product lines in the cart (not sum of quantities). */
+  const lineCount = items.length;
 
   return (
     <div className="cd-root" ref={ref}>
@@ -305,13 +306,13 @@ export default function CartDropdown() {
         aria-haspopup="dialog"
       >
         🛒
-        <span className="cd-badge">{totalCount}</span>
+        <span className="cd-badge">{lineCount}</span>
       </button>
 
       {open && (
         <div className="cd-panel" style={panelStyle} role="dialog" aria-label="Shopping cart">
           <p className="cd-header">
-            Shopping Cart <span>({String(totalCount).padStart(2, "0")})</span>
+            Shopping Cart <span>({String(lineCount).padStart(2, "0")})</span>
           </p>
 
           <div className="cd-items">
