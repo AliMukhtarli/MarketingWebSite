@@ -11,14 +11,14 @@ const products = [
     badge: "HOT",
     discount: "32% OFF",
     large: true,
-    image: "/images/homepage/PS5.jpg",
+    image: "/images/homepage/Xbox299.jpg",
   },
   {
     id: 2,
     name: "Base Sport Earbuds -Wireless Earphones -Bluetooth In Ear...",
     price: 2300,
     badge: "SOLD OUT",
-    image: "/images/homepage/Drone.jpg",
+    image: "/images/homepage/FlipBuds.jpg",
   },
   {
     id: 3,
@@ -32,27 +32,27 @@ const products = [
     price: 1.5,
     oldPrice: 868,
     discount: "10% OFF",
-    image: "/images/homepage/XboxConsole.jpg",
+    image: "/images/homepage/TV.jpg",
   },
   {
     id: 5,
     name: "Sony DSCHX8 High Zoom Point & Shoot Camera",
     price: 1280,
     oldPrice: null,
-    image: "/images/homepage/Headphone.jpg",
+    image: "/images/homepage/Camera.jpg",
   },
   {
     id: 6,
     name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor",
     price: 299,
-    image: "/images/homepage/Phone0.jpg",
+    image: "/images/homepage/Monitor2.jpg",
   },
   {
     id: 7,
     name: "Portable Washing Machine, 11lbs capacity Model 18NMFIAM",
     price: 70,
     oldPrice: 865.99,
-    image: "/images/homepage/Drone2.jpg",
+    image: "/images/homepage/AirConditioner.jpg",
   },
   {
     id: 8,
@@ -60,7 +60,7 @@ const products = [
     price: 160,
     badge: "HOT",
     oldPrice: null,
-    image: "/images/homepage/Monitor.jpg",
+    image: "/images/homepage/Drone.jpg",
   },
   {
     id: 9,
@@ -68,7 +68,7 @@ const products = [
     price: 250,
     oldPrice: 360,
     discount: "19% OFF",
-    image: "/images/homepage/Camera.jpg",
+    image: "/images/homepage/HomePod.jpg",
   },
 ];
 

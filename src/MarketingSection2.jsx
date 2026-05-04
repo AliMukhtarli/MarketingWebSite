@@ -408,11 +408,6 @@ export default function Marketing2() {
           line-height: 1.6; margin-bottom: 20px;
           max-width: 200px;
         }
-        .s2-intro-img-light {
-          width: 160px; height: 140px;
-          background: #B401A5;
-          border-radius: 10px; flex-shrink: 0;
-        }
         .s2-intro-dark {
           background: #1a1f3c;
           border-radius: 12px;
@@ -442,8 +437,7 @@ export default function Marketing2() {
           max-width: 200px;
         }
         .s2-intro-img-dark {
-          width: 160px; height: 140px;
-          background: #B401A5;
+          width: 210px; height: 140px;
           border-radius: 10px; flex-shrink: 0;
           position: relative;
         }
@@ -546,7 +540,7 @@ export default function Marketing2() {
             <p>Jam-packed with innovation, HomePod mini delivers unexpectedly.</p>
             <button className="s2-shop-btn" style={{ width: "auto" }}>SHOP NOW →</button>
           </div>
-          <div className="s2-intro-img-light" />
+          <img src="public/images/homepage/HomePod.jpg" alt="" />
         </div>
 
         {/* Dark banner */}
@@ -558,6 +552,7 @@ export default function Marketing2() {
             <button className="s2-shop-btn" style={{ width: "auto" }}>SHOP NOW →</button>
           </div>
           <div className="s2-intro-img-dark">
+            <img src="public/images/homepage/Pixel6.png" alt="" />
             <div className="s2-price-bubble">$590</div>
           </div>
         </div>

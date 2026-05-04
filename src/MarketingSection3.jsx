@@ -1,35 +1,35 @@
 import { useState } from "react";
 
 const accessories = [
-  { id: 1, name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...", price: 360, rating: 4, reviews: 594, badge: "BEST DEALS", badgeType: "best" },
-  { id: 2, name: "Portable Washing Machine, 11lbs capacity Model 18NMF...", price: 80, rating: 4, reviews: 7980 },
-  { id: 3, name: "TOZO T6 True Wireless Earbuds Bluetooth Headphon...", price: 70, rating: 5, reviews: 500, badge: "HOT", badgeType: "hot" },
-  { id: 4, name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor", price: 250, rating: 4, reviews: 450 },
-  { id: 5, name: "Samsung Electronics Samsung Galaxy S21 5G", price: 2300, rating: 3, reviews: 742 },
-  { id: 6, name: "4K UHD LED Smart TV with Chromecast Built-in", price: 220, rating: 3, reviews: 558, badge: "SALE", badgeType: "sale" },
-  { id: 7, name: "Wired Over-Ear Gaming Headphones with USB", price: 1500, rating: 3, reviews: 536 },
-  { id: 8, name: "Polaroid 57-Inch Photo/Video Tripod with Deluxe Tripod Ca...", price: 1200, oldPrice: 1600, rating: 4, reviews: 423, discount: "25% OFF" },
+  { id: 1, name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...", price: 360, rating: 4, reviews: 594, badge: "BEST DEALS", badgeType: "best", image: "/images/homepage/Accesuars.jpg" },
+  { id: 2, name: "Portable Washing Machine, 11lbs capacity Model 18NMF...", price: 80, rating: 4, reviews: 7980, image: "/images/homepage/AirConditioner.jpg" },
+  { id: 3, name: "TOZO T6 True Wireless Earbuds Bluetooth Headphon...", price: 70, rating: 5, reviews: 500, badge: "HOT", badgeType: "hot", image: "/images/homepage/FlipBuds.jpg" },
+  { id: 4, name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor", price: 250, rating: 4, reviews: 450, image: "/images/homepage/Monitor2.jpg" },
+  { id: 5, name: "Samsung Electronics Samsung Galaxy S21 5G", price: 2300, rating: 3, reviews: 742, image: "/images/homepage/SmartPhone.jpg" },
+  { id: 6, name: "4K UHD LED Smart TV with Chromecast Built-in", price: 220, rating: 3, reviews: 558, badge: "SALE", badgeType: "sale", image: "/images/homepage/TV.jpg" },
+  { id: 7, name: "Wired Over-Ear Gaming Headphones with USB", price: 1500, rating: 3, reviews: 536, image: "/images/homepage/Headphone.jpg" },
+  { id: 8, name: "Polaroid 57-Inch Photo/Video Tripod with Deluxe Tripod Ca...", price: 1200, oldPrice: 1600, rating: 4, reviews: 423, discount: "25% OFF", image: "/images/homepage/Camera.jpg" },
 ];
 
 const flashSale = [
-  { name: "Bose Sport Earbuds -Wireless Earphones -Bluetooth In Ear...", price: 1500 },
-  { name: "Simple Mobile 4G LTE Prepaid Smartphone", price: 1500 },
-  { name: "4K UHD LED Smart TV with Chromecast Built-in", price: 1500 },
+  { name: "Bose Sport Earbuds -Wireless Earphones -Bluetooth In Ear...", price: 1500, image: "/images/homepage/FlipBuds.jpg" },
+  { name: "Simple Mobile 4G LTE Prepaid Smartphone", price: 1500, image: "/images/homepage/SmartPhone.jpg" },
+  { name: "4K UHD LED Smart TV with Chromecast Built-in", price: 1500, image: "/images/homepage/TV.jpg" },
 ];
 const bestSellers = [
-  { name: "Samsung Electronics Samsung Galaxy S21 5G", price: 1500 },
-  { name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone", price: 1500 },
-  { name: "Sony DSCHX8 High Zoom Point & Shoot Camera", price: 1500 },
+  { name: "Samsung Electronics Samsung Galaxy S21 5G", price: 1500, image: "/images/homepage/SmartPhone.jpg" },
+  { name: "Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone", price: 1500, image: "/images/homepage/Phone1.jpg" },
+  { name: "Sony DSCHX8 High Zoom Point & Shoot Camera", price: 1500, image: "/images/homepage/Camera.jpg" },
 ];
 const topRated = [
-  { name: "Portable Washing Machine, 11lbs capacity Model 18NMF...", price: 1500 },
-  { name: "Sony DSCHX8 High Zoom Point & Shoot Camera", price: 1500 },
-  { name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor", price: 1500 },
+  { name: "Portable Washing Machine, 11lbs capacity Model 18NMF...", price: 1500, image: "/images/homepage/AirConditioner.jpg" },
+  { name: "Sony DSCHX8 High Zoom Point & Shoot Camera", price: 1500, image: "/images/homepage/Camera.jpg" },
+  { name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor", price: 1500, image: "/images/homepage/Monitor2.jpg" },
 ];
 const newArrival = [
-  { name: "TOZO T6 True Wireless Earbuds Bluetooth Headpha...", price: 1500 },
-  { name: "JBL FLIP 4 -Waterproof Portable Bluetooth Speaker...", price: 1500 },
-  { name: "Wyze Cam Pan v2 1080p Pan/Tilt/Zoom Wi-Fi Indoor Smar...", price: 1500 },
+  { name: "TOZO T6 True Wireless Earbuds Bluetooth Headpha...", price: 1500, image: "/images/homepage/FlipBuds.jpg" },
+  { name: "JBL FLIP 4 -Waterproof Portable Bluetooth Speaker...", price: 1500, image: "/images/homepage/HomePod.jpg" },
+  { name: "Wyze Cam Pan v2 1080p Pan/Tilt/Zoom Wi-Fi Indoor Smar...", price: 1500, image: "/images/homepage/Camera.jpg" },
 ];
 
 function StarRating({ rating }) {
@@ -56,7 +56,7 @@ function AccessoryCard({ product }) {
       {product.discount && (
         <span className="s3-badge s3-badge-discount">{product.discount}</span>
       )}
-      <div className="s3-acc-img" />
+      <img className="s3-acc-img" src={product.image} alt="" />
       {hovered && (
         <div className="s3-hover-actions">
           <button className="s3-hover-btn">♡</button>
@@ -82,7 +82,7 @@ function AccessoryCard({ product }) {
 function MiniProductRow({ item }) {
   return (
     <div className="s3-mini-row">
-      <div className="s3-mini-img" />
+      <img className="s3-mini-img" src={item.image} alt="" />
       <div className="s3-mini-info">
         <p className="s3-mini-name">{item.name}</p>
         <span className="s3-mini-price">${item.price.toLocaleString()}</span>
@@ -139,6 +139,8 @@ export default function MarketingSection3() {
         }
         .s3-acc-img {
           width: 100%; height: 120px;
+          object-fit: cover;
+          display: block;
           background: #B401A5;
         }
         .s3-badge {
@@ -330,8 +332,10 @@ export default function MarketingSection3() {
         .s3-mini-row:hover .s3-mini-name { color: #f5a623; }
         .s3-mini-img {
           width: 56px; height: 56px;
-          background: #B401A5;
+          object-fit: cover;
           border-radius: 8px; flex-shrink: 0;
+          background: #B401A5;
+          display: block;
         }
         .s3-mini-info {}
         .s3-mini-name {
@@ -378,7 +382,7 @@ export default function MarketingSection3() {
         <div className="s3-acc-right">
           {/* Light promo card */}
           <div className="s3-side-card-light">
-            <div className="s3-side-img" />
+            <img src="/images/homepage/True.png" alt="" />
             <h3>Xiaomi True Wireless Earbuds</h3>
             <p>Escape the noise. It's time to hear the magic with Xiaomi Earbuds.</p>
             <div className="s3-only-row">
@@ -410,7 +414,7 @@ export default function MarketingSection3() {
         </div>
         <div className="s3-mac-right">
           <div className="s3-mac-bubble">$1999</div>
-          <div className="s3-mac-img" />
+          <img src="/images/homepage/Mac.png" alt="" />
         </div>
       </div>
 
