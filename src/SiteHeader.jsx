@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import AllCategoryDropdown from "./AllCategoryDropdown";
 import CartDropdown from "./CartDropdown";
@@ -30,9 +30,28 @@ function NavIcon({ src }) {
 }
 
 export default function SiteHeader() {
+  const headerRef = useRef(null);
+  const [spacerH, setSpacerH] = useState(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = headerRef.current;
+      if (!el) return;
+      const h = Math.ceil(el.getBoundingClientRect().height);
+      setSpacerH(h);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   return (
-    <div className="site-header">
-      <style>{`
+    <>
+      {/* Spacer so fixed header doesn't cover page content */}
+      <div aria-hidden style={{ height: spacerH }} />
+
+      <div className="site-header" ref={headerRef}>
+        <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
         :root {
@@ -47,7 +66,15 @@ export default function SiteHeader() {
           --white: #ffffff;
         }
 
-        .site-header { position: sticky; top: 0; z-index: 1000; }
+        /* Sticky can break if any parent has overflow/transform; fixed is more reliable. */
+        .site-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 10000;
+          width: 100%;
+        }
 
         :root { --page-pad: clamp(16px, 3vw, 40px); }
 
@@ -172,63 +199,64 @@ export default function SiteHeader() {
         @media (max-width: 480px) {
           .top-bar { font-size: 11px; }
         }
-      `}</style>
+        `}</style>
 
-      <div className="top-bar">
-        <span>Yuxuların qənimi saytına xoş gəlmisiniz!!!</span>
-        <div className="top-bar-right">
-          <SocialFollowLinks />
-        </div>
-      </div>
-
-      <header className="header">
-        <Link className="logo" to="/">
-          <img src="/images/nav/basket.jpg" alt="" />
-          Gəlmə Gətirsinlər
-        </Link>
-        <div className="search-bar">
-          <input type="text" placeholder="Search for anything..." />
-          <button>🔍</button>
-        </div>
-        <div className="header-icons">
-          <CartDropdown />
-          <Link className="icon-circle" to="/wishlist" title="Wishlist">
-            ♡
-          </Link>
-          <LoginDropdown />
-        </div>
-      </header>
-
-      <nav className="nav-bar">
-        <div className="nav-left">
-          <AllCategoryDropdown />
-          <div className="nav-scroll">
-            {NAV_LINKS.map((item) => {
-              const graphic = <NavIcon src={item.icon} />;
-              const inner = (
-                <>
-                  {graphic}
-                  {item.label}
-                </>
-              );
-              return item.to ? (
-                <Link className="nav-item" key={item.label} to={item.to}>
-                  {inner}
-                </Link>
-              ) : (
-                <div className="nav-item" key={item.label}>
-                  {inner}
-                </div>
-              );
-            })}
+        <div className="top-bar">
+          <span>Yuxuların qənimi saytına xoş gəlmisiniz!!!</span>
+          <div className="top-bar-right">
+            <SocialFollowLinks />
           </div>
         </div>
-        <div className="nav-phone">
-          <img className="nav-phone-icon" src="/images/nav/PhoneCall.svg" alt="" />
-          +994-070-596-99-66
-        </div>
-      </nav>
-    </div>
+
+        <header className="header">
+          <Link className="logo" to="/">
+            <img src="/images/nav/basket.jpg" alt="" />
+            Gəlmə Gətirsinlər
+          </Link>
+          <div className="search-bar">
+            <input type="text" placeholder="Search for anything..." />
+            <button>🔍</button>
+          </div>
+          <div className="header-icons">
+            <CartDropdown />
+            <Link className="icon-circle" to="/wishlist" title="Wishlist">
+              ♡
+            </Link>
+            <LoginDropdown />
+          </div>
+        </header>
+
+        <nav className="nav-bar">
+          <div className="nav-left">
+            <AllCategoryDropdown />
+            <div className="nav-scroll">
+              {NAV_LINKS.map((item) => {
+                const graphic = <NavIcon src={item.icon} />;
+                const inner = (
+                  <>
+                    {graphic}
+                    {item.label}
+                  </>
+                );
+                return item.to ? (
+                  <Link className="nav-item" key={item.label} to={item.to}>
+                    {inner}
+                  </Link>
+                ) : (
+                  <div className="nav-item" key={item.label}>
+                    {inner}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="nav-phone">
+            <img className="nav-phone-icon" src="/images/nav/PhoneCall.svg" alt="" />
+            +994-070-596-99-66
+          </div>
+        </nav>
+      </div>
+    </>
   );
 }
 
