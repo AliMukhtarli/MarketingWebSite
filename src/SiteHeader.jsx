@@ -1,7 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import AllCategoryDropdown from "./AllCategoryDropdown";
 import CartDropdown from "./CartDropdown";
 import LoginDropdown from "./LoginDropdown";
+
+/**
+ * Icons: put files in `public/images/nav/` (`/images/...` = site root).
+ */
+const NAV_LINKS = [
+  { label: "Track Order", to: "/track-order", icon: "/images/nav/TrackOrder.svg" },
+  { label: "Compare", icon: "/images/nav/Compare.svg" },
+  { label: "Customer Support", icon: "/images/nav/CustomerSupport.svg" },
+  { label: "Need Help", icon: "/images/nav/NeedHelp.svg" },
+];
+
+function NavIcon({ src }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) return <span className="nav-dot" />;
+  return (
+    <img
+      className="nav-icon"
+      src={src}
+      alt=""
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export default function SiteHeader() {
   return (
@@ -129,6 +154,13 @@ export default function SiteHeader() {
         }
         .nav-item:hover { color: var(--accent); }
         .nav-item .nav-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+        .nav-item .nav-icon {
+          width: 18px;
+          height: 18px;
+          object-fit: contain;
+          flex-shrink: 0;
+          display: block;
+        }
         /* all category styling is inside AllCategoryDropdown */
         .nav-phone { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
         .nav-phone .nav-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
@@ -162,8 +194,8 @@ export default function SiteHeader() {
 
       <header className="header">
         <Link className="logo" to="/">
-          <div className="logo-box" />
-          Umico
+          <img src="images/nav/basket.jpg" width={40} alt="" />
+          Gəlmə Apar
         </Link>
         <div className="search-bar">
           <input type="text" placeholder="Search for anything..." />
@@ -182,22 +214,31 @@ export default function SiteHeader() {
         <div className="nav-left">
           <AllCategoryDropdown />
           <div className="nav-scroll">
-            <Link className="nav-item" to="/track-order">
-              <span className="nav-dot" />
-              Track Order
-            </Link>
-            {["Compare", "Customer Support", "Need Help"].map((item) => (
-              <div className="nav-item" key={item}>
-                <span className="nav-dot" />
-                {item}
-              </div>
-            ))}
+            {NAV_LINKS.map((item) => {
+              const graphic = <NavIcon src={item.icon} />;
+              const inner = (
+                <>
+                  {graphic}
+                  {item.label}
+                </>
+              );
+              return item.to ? (
+                <Link className="nav-item" key={item.label} to={item.to}>
+                  {inner}
+                </Link>
+              ) : (
+                <div className="nav-item" key={item.label}>
+                  {inner}
+                </div>
+              );
+            })}
           </div>
         </div>
-        <div className="nav-phone">
+        
+          <img src="images/nav/PhoneCall.svg" alt="" />
           <span className="nav-dot" />
           +1-202-555-0104
-        </div>
+        
       </nav>
     </div>
   );

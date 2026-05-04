@@ -331,7 +331,11 @@ export default function MarketingHome({ hideHeader = false }) {
           position: relative;
         }
         .price-bubble {
-          position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          left: auto;
+          transform: none;
           background: #4DD9F5; color: white;
           border-radius: 50%; width: 70px; height: 70px;
           display: flex; align-items: center; justify-content: center;
@@ -547,7 +551,7 @@ export default function MarketingHome({ hideHeader = false }) {
           <header className="header">
             <a className="logo" href="#">
               <div className="logo-box" />
-              Umico
+              Gəlmə Apar
             </a>
             <div className="search-bar">
               <input type="text" placeholder="Search for anything..." />
@@ -597,6 +601,7 @@ export default function MarketingHome({ hideHeader = false }) {
             <button className="shop-now-btn">SHOP NOW →</button>
           </div>
           <div className="hero-img-placeholder">
+            <img src="public/images/Xbox299.jpg" alt="Xbox Console" />
             <div className="price-bubble">$299</div>
           </div>
         </div>

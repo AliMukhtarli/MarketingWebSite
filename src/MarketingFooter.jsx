@@ -368,7 +368,7 @@ export default function MarketingFooter() {
           <div>
             <div className="sf-brand-logo">
               <div className="sf-logo-box" />
-              Umico
+              Gəlmə Apar
             </div>
             <p className="sf-brand-phone">(629) 555-0129</p>
             <p className="sf-brand-addr">
