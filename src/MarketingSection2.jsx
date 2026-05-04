@@ -4,7 +4,7 @@ const categories = [
   { id: 1, label: "Computer & Laptop", image: "/images/homepage/Monitor2.jpg" },
   { id: 2, label: "SmartPhone", image: "/images/homepage/SmartPhone.jpg" },
   { id: 3, label: "Headphones", image: "/images/homepage/Headphone.jpg" },
-  { id: 4, label: "Accessories", image: "/images/homepage/Monitor.jpg" },
+  { id: 4, label: "Accessories", image: "/images/homepage/Acs.jpg" },
   { id: 5, label: "Camera & Photo", image: "/images/homepage/Camera.jpg" },
   { id: 6, label: "TV & Homes", image: "/images/homepage/TV.jpg" },
 ];
@@ -20,7 +20,7 @@ const featuredProducts = [
     reviews: 738,
     badge: "HOT",
     badgeType: "hot",
-    image: "/images/homepage/Phone1.jpg",
+    image: "/images/homepage/FlipBuds.jpg",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const featuredProducts = [
     price: 2300,
     rating: 4,
     reviews: 536,
-    image: "/images/homepage/Phone0.jpg",
+    image: "/images/homepage/SmartPhone.jpg",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const featuredProducts = [
     reviews: 423,
     badge: "BEST DEALS",
     badgeType: "best",
-    image: "/images/homepage/AirConditioner.jpg",
+    image: "/images/homepage/HDMI.jpg",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const featuredProducts = [
     price: 80,
     rating: 3,
     reviews: 810,
-    image: "/images/homepage/Headphones2.jpg",
+    image: "/images/homepage/AirConditioner.jpg",
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ const featuredProducts = [
     price: 1500,
     rating: 5,
     reviews: 647,
-    image: "/images/homepage/Drone2.jpg",
+    image: "/images/homepage/Headphone.jpg",
   },
   {
     id: 6,
@@ -64,7 +64,7 @@ const featuredProducts = [
     rating: 4,
     reviews: 877,
     discount: "25% OFF",
-    image: "/images/homepage/TV.jpg",
+    image: "/images/homepage/Camera.jpg",
   },
   {
     id: 7,
