@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const initialItems = [
   {
@@ -275,12 +276,19 @@ export default function CartDropdown() {
           border: 1.5px solid #f5a623;
           border-radius: 8px;
           padding: 12px;
-          font-size: 14px; font-weight: 700;
+          font-size: 14px;
+          font-weight: 700;
           font-family: inherit;
           cursor: pointer;
           margin-top: 10px;
           letter-spacing: 0.5px;
           transition: background 0.2s;
+          text-decoration: none;
+          text-align: center;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .cd-viewcart-btn:hover { background: #fff8ed; }
       `}</style>
@@ -340,12 +348,12 @@ export default function CartDropdown() {
                 <span className="cd-subtotal-label">Sub-Total:</span>
                 <span className="cd-subtotal-amount">${subtotal.toLocaleString()}.00 USD</span>
               </div>
-              <button type="button" className="cd-checkout-btn">
+              <Link to="/checkout" className="cd-checkout-btn" onClick={() => setOpen(false)}>
                 CHECKOUT NOW →
-              </button>
-              <button type="button" className="cd-viewcart-btn">
+              </Link>
+              <Link to="/cart" className="cd-viewcart-btn" onClick={() => setOpen(false)}>
                 VIEW CART
-              </button>
+              </Link>
             </>
           )}
         </div>
