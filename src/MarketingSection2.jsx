@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 const categories = [
-  { id: 1, label: "Computer & Laptop" },
-  { id: 2, label: "SmartPhone" },
-  { id: 3, label: "Headphones" },
-  { id: 4, label: "Accessories" },
-  { id: 5, label: "Camera & Photo" },
-  { id: 6, label: "TV & Homes" },
+  { id: 1, label: "Computer & Laptop", image: "/images/homepage/Monitor2.jpg" },
+  { id: 2, label: "SmartPhone", image: "/images/homepage/SmartPhone.jpg" },
+  { id: 3, label: "Headphones", image: "/images/homepage/Headphone.jpg" },
+  { id: 4, label: "Accessories", image: "/images/homepage/Monitor.jpg" },
+  { id: 5, label: "Camera & Photo", image: "/images/homepage/Camera.jpg" },
+  { id: 6, label: "TV & Homes", image: "/images/homepage/XboxConsole.jpg" },
 ];
 
 const tabs = ["All Product", "Smart Phone", "Laptop", "Headphone", "TV"];
@@ -182,6 +182,8 @@ export default function Marketing2() {
         }
         .s2-cat-img {
           width: 100%; aspect-ratio: 1;
+          object-fit: cover;
+          display: block;
           background: #B401A5;
           border-radius: 10px;
           transition: transform 0.2s, box-shadow 0.2s;
@@ -473,7 +475,7 @@ export default function Marketing2() {
           <div className="s2-cat-grid">
             {categories.map((cat) => (
               <div className="s2-cat-item" key={cat.id}>
-                <div className="s2-cat-img" />
+                <img className="s2-cat-img" src={cat.image} alt="" />
                 <span className="s2-cat-label">{cat.label}</span>
               </div>
             ))}

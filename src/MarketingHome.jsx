@@ -11,17 +11,20 @@ const products = [
     badge: "HOT",
     discount: "32% OFF",
     large: true,
+    image: "/images/homepage/PS5.jpg",
   },
   {
     id: 2,
     name: "Base Sport Earbuds -Wireless Earphones -Bluetooth In Ear...",
     price: 2300,
     badge: "SOLD OUT",
+    image: "/images/homepage/Drone.jpg",
   },
   {
     id: 3,
     name: "Simple Mobile 4G LTE Prepaid Smartphone",
     price: 220,
+    image: "/images/homepage/SmartPhone.jpg",
   },
   {
     id: 4,
@@ -29,23 +32,27 @@ const products = [
     price: 1.5,
     oldPrice: 868,
     discount: "10% OFF",
+    image: "/images/homepage/XboxConsole.jpg",
   },
   {
     id: 5,
     name: "Sony DSCHX8 High Zoom Point & Shoot Camera",
     price: 1280,
     oldPrice: null,
+    image: "/images/homepage/Headphone.jpg",
   },
   {
     id: 6,
     name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor",
     price: 299,
+    image: "/images/homepage/Phone0.jpg",
   },
   {
     id: 7,
     name: "Portable Washing Machine, 11lbs capacity Model 18NMFIAM",
     price: 70,
     oldPrice: 865.99,
+    image: "/images/homepage/Drone2.jpg",
   },
   {
     id: 8,
@@ -53,6 +60,7 @@ const products = [
     price: 160,
     badge: "HOT",
     oldPrice: null,
+    image: "/images/homepage/Monitor.jpg",
   },
   {
     id: 9,
@@ -60,6 +68,7 @@ const products = [
     price: 250,
     oldPrice: 360,
     discount: "19% OFF",
+    image: "/images/homepage/Camera.jpg",
   },
 ];
 
@@ -97,6 +106,48 @@ function StarRating({ rating }) {
   );
 }
 
+/** Inline SVGs for the features bar — swap `variant` or use `icon: <img src="…" alt="" />` for your own art. */
+function FeatureBarIcon({ variant }) {
+  const s = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" };
+  switch (variant) {
+    case "delivery":
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden {...s}>
+          <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+          <path d="M15 18H9" />
+          <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+          <circle cx="17" cy="18" r="2" />
+          <circle cx="7" cy="18" r="2" />
+        </svg>
+      );
+    case "return":
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden {...s}>
+          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+          <path d="M21 3v5h-5" />
+          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+          <path d="M3 21v-5h5" />
+        </svg>
+      );
+    case "payment":
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden {...s}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      );
+    case "support":
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden {...s}>
+          <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
   if (product.large) {
@@ -104,7 +155,7 @@ function ProductCard({ product }) {
       <div className="product-card large-card">
         {product.badge && <span className="badge hot">{product.badge}</span>}
         {product.discount && <span className="badge discount">{product.discount}</span>}
-        <div className="product-img-placeholder large-img" />
+        <img className="product-thumb" src={product.image} alt="" />
         <StarRating rating={product.rating} />
         <span className="review-count">({product.reviews?.toLocaleString()})</span>
         <p className="product-name">{product.name}</p>
@@ -134,7 +185,7 @@ function ProductCard({ product }) {
         </span>
       )}
       {product.discount && <span className="badge discount">{product.discount}</span>}
-      <div className="product-img-placeholder" />
+      <img className="product-thumb" src={product.image} alt="" />
       {hovered && (
         <div className="hover-actions">
           <button className="hover-btn" title="Like">♡</button>
@@ -352,11 +403,28 @@ export default function MarketingHome({ hideHeader = false }) {
           flex: 1;
           box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
+        .side-banner-top-body {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .side-banner-top-copy { flex: 1; min-width: 0; }
+        .side-banner-top .side-banner-top-img {
+          flex-shrink: 0;
+          width: min(150px, 42%);
+          max-height: 140px;
+          height: auto;
+          object-fit: contain;
+          object-position: right;
+          align-self: flex-end;
+        }
         .side-banner-top .off-badge {
           position: absolute; top: 12px; right: 12px;
           background: var(--accent); color: white;
           border-radius: 4px; padding: 3px 8px;
           font-size: 11px; font-weight: 700;
+          z-index: 1;
         }
         .summer-tag { font-size: 10px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
         .side-banner-top h3 { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
@@ -390,7 +458,18 @@ export default function MarketingHome({ hideHeader = false }) {
           border-right: 1px solid var(--border);
         }
         .feature-item:last-child { border-right: none; }
-        .feature-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 6px; flex-shrink: 0; }
+        .feature-icon {
+          width: 36px;
+          height: 36px;
+          background: var(--accent);
+          border-radius: 6px;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+        }
+        .feature-icon img { width: 22px; height: 22px; object-fit: contain; }
         .feature-item h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
         .feature-item p { font-size: 11px; color: var(--muted); }
 
@@ -435,6 +514,19 @@ export default function MarketingHome({ hideHeader = false }) {
           margin-bottom: 8px;
         }
         .large-img { height: 220px; }
+
+        .product-card .product-thumb {
+          width: 100%;
+          height: 120px;
+          object-fit: cover;
+          border-radius: 8px;
+          margin-bottom: 8px;
+          display: block;
+          background: var(--primary);
+        }
+        .large-card .product-thumb {
+          height: 220px;
+        }
 
         /* BADGES */
         .badge {
@@ -601,7 +693,7 @@ export default function MarketingHome({ hideHeader = false }) {
             <button className="shop-now-btn">SHOP NOW →</button>
           </div>
           <div className="hero-img-placeholder">
-            <img src="public/images/Xbox299.jpg" alt="Xbox Console" />
+            <img src="/images/homepage/Xbox299.jpg" alt="Xbox Console" />
             <div className="price-bubble">$299</div>
           </div>
         </div>
@@ -609,13 +701,21 @@ export default function MarketingHome({ hideHeader = false }) {
         <div className="side-banners">
           <div className="side-banner-top">
             <span className="off-badge">29% OFF</span>
-            <p className="summer-tag">SUMMER SALES</p>
-            <h3>New Google<br />Pixel 6 Pro</h3>
-            <button className="shop-now-btn">SHOP NOW →</button>
-            <div className="side-img" />
+            <div className="side-banner-top-body">
+              <div className="side-banner-top-copy">
+                <p className="summer-tag">SUMMER SALES</p>
+                <h3>New Google<br />Pixel 6 Pro</h3>
+                <button className="shop-now-btn">SHOP NOW →</button>
+              </div>
+              <img
+                className="side-banner-top-img"
+                src="/images/homepage/Pixel6.png"
+                alt="Google Pixel 6 Pro"
+              />
+            </div>
           </div>
           <div className="side-banner-bottom">
-            <div className="side-bottom-img" />
+            <img src="/images/homepage/FlipBuds.jpg" alt="" />
             <div className="side-bottom-info">
               <h4>Xiaomi FlipBuds Pro</h4>
               <p className="usd-price">$299 USD</p>
@@ -628,13 +728,15 @@ export default function MarketingHome({ hideHeader = false }) {
       {/* FEATURES BAR */}
       <div className="features-bar">
         {[
-          { title: "FASTED DELIVERY", desc: "Delivery in 24/H" },
-          { title: "24 HOURS RETURN", desc: "100% money-back guarantee" },
-          { title: "SECURE PAYMENT", desc: "Your money is safe" },
-          { title: "SUPPORT 24/7", desc: "Live contact/massage" },
+          { title: "FASTED DELIVERY", desc: "Delivery in 24/H", icon: "delivery" },
+          { title: "24 HOURS RETURN", desc: "100% money-back guarantee", icon: "return" },
+          { title: "SECURE PAYMENT", desc: "Your money is safe", icon: "payment" },
+          { title: "SUPPORT 24/7", desc: "Live contact/massage", icon: "support" },
         ].map((f) => (
           <div className="feature-item" key={f.title}>
-            <div className="feature-icon" />
+            <div className="feature-icon" aria-hidden>
+              {typeof f.icon === "string" ? <FeatureBarIcon variant={f.icon} /> : f.icon}
+            </div>
             <div>
               <h4>{f.title}</h4>
               <p>{f.desc}</p>
